@@ -1,266 +1,271 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Localhost API Tester</title>
-  <style>
-    body {
-      font-family: "Segoe UI", sans-serif;
-      background-color: #f0fff4;
-      color: #2f855a;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 40px;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Localhost API Tester</title>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background-color: #f0fff4;
+            color: #2f855a;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 40px;
+        }
 
-    .container {
-      max-width: 700px;
-      width: 100%;
-      background: #ffffff;
-      border: 1px solid #c6f6d5;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 8px 24px rgba(72, 187, 120, 0.2);
-    }
+        .container {
+            max-width: 700px;
+            width: 100%;
+            background: #ffffff;
+            border: 1px solid #c6f6d5;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(72, 187, 120, 0.2);
+        }
 
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-      color: #2f855a;
-    }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2f855a;
+        }
 
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: 600;
-    }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: 600;
+        }
 
-    input[type="text"],
-    select,
-    input[type="file"],
-    textarea {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #c6f6d5;
-      border-radius: 6px;
-      margin-top: 6px;
-      font-family: monospace;
-    }
+        input[type="text"],
+        select,
+        input[type="file"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #c6f6d5;
+            border-radius: 6px;
+            margin-top: 6px;
+            font-family: monospace;
+        }
 
-    textarea {
-      resize: vertical;
-      min-height: 100px;
-    }
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
 
-    .checkbox-row {
-      display: flex;
-      align-items: center;
-      margin-top: 8px;
-      gap: 8px;
-    }
+        .checkbox-row {
+            display: flex;
+            align-items: center;
+            margin-top: 8px;
+            gap: 8px;
+        }
 
-    button {
-      margin-top: 20px;
-      width: 100%;
-      padding: 12px;
-      background-color: #38a169;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            background-color: #38a169;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
 
-    button:hover {
-      background-color: #2f855a;
-    }
+        button:hover {
+            background-color: #2f855a;
+        }
 
-    .message {
-      margin-top: 20px;
-      text-align: center;
-      font-weight: bold;
-    }
+        .message {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
 
-    #responseBox {
-      margin-top: 20px;
-      border: 1px solid #c6f6d5;
-      border-radius: 6px;
-      padding: 15px;
-      background-color: #f0fff4;
-      white-space: pre-wrap;
-      font-family: monospace;
-      color: #22543d;
-    }
+        #responseBox {
+            margin-top: 20px;
+            border: 1px solid #c6f6d5;
+            border-radius: 6px;
+            padding: 15px;
+            background-color: #f0fff4;
+            white-space: pre-wrap;
+            font-family: monospace;
+            color: #22543d;
+        }
 
-    .token-container {
-      margin-top: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+        .token-container {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-    .token-container input {
-      flex-grow: 1;
-      font-size: 14px;
-      padding: 8px;
-      border-radius: 6px;
-      border: 1px solid #c6f6d5;
-    }
+        .token-container input {
+            flex-grow: 1;
+            font-size: 14px;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #c6f6d5;
+        }
 
-    .token-container button {
-      width: auto;
-      padding: 8px 12px;
-      margin-top: 0;
-    }
-  </style>
+        .token-container button {
+            width: auto;
+            padding: 8px 12px;
+            margin-top: 0;
+        }
+    </style>
 </head>
+
 <body>
-  <div class="container">
-    <h2>Localhost API Tester</h2>
-    <form id="apiForm">
-      <label for="url">Request URL</label>
-      <input type="text" id="url" name="url" placeholder="http://localhost:3000/api"/>
+    <div class="container">
+        <h2>Localhost API Tester</h2>
+        <form id="apiForm">
+            <label for="url">Request URL</label>
+            <input type="text" id="url" name="url" placeholder="http://localhost:3000/api" />
 
-      <label for="method">HTTP Method</label>
-      <select id="method" name="method">
-        <option value="GET">GET</option>
-        <option value="POST">POST</option>
-        <option value="PUT">PUT</option>
-        <option value="DELETE">DELETE</option>
-      </select>
+            <label for="method">HTTP Method</label>
+            <select id="method" name="method">
+                <option value="GET">GET</option>
+                <option value="POST">POST</option>
+                <option value="PUT">PUT</option>
+                <option value="DELETE">DELETE</option>
+            </select>
 
-      <label for="jwt">JWT Token</label>
-      <input type="text" id="jwt" name="jwt" placeholder="Bearer token"/>
-      <div class="checkbox-row">
-        <input type="checkbox" id="includeJwt" checked />
-        <label for="includeJwt">Include JWT Token</label>
-      </div>
+            <label for="jwt">JWT Token</label>
+            <input type="text" id="jwt" name="jwt" placeholder="Bearer token" />
+            <div class="checkbox-row">
+                <input type="checkbox" id="includeJwt" checked />
+                <label for="includeJwt">Include JWT Token</label>
+            </div>
 
-      <label for="file">File Upload</label>
-      <input type="file" id="file" name="file"/>
-      <div class="checkbox-row">
-        <input type="checkbox" id="includeFile" checked />
-        <label for="includeFile">Include File</label>
-      </div>
+            <label for="file">File Upload</label>
+            <input type="file" id="file" name="file" />
+            <div class="checkbox-row">
+                <input type="checkbox" id="includeFile" checked />
+                <label for="includeFile">Include File</label>
+            </div>
 
-      <label for="jsonBody">JSON Body (for POST/PUT)</label>
-      <textarea id="jsonBody" placeholder='{"key": "value"}'></textarea>
+            <label for="jsonBody">JSON Body (for POST/PUT)</label>
+            <textarea id="jsonBody" placeholder='{"key": "value"}'></textarea>
 
-      <button type="submit">Submit Request</button>
-    </form>
+            <button type="submit">Submit Request</button>
+        </form>
 
-    <div id="responseBox">Waiting for response...</div>
+        <div id="responseBox">Waiting for response...</div>
 
-    <div id="tokenContainer" class="token-container" style="display: none;">
-      <input type="text" id="accessToken" readonly />
-      <button type="button" onclick="copyToken()">Copy Token</button>
+        <div id="tokenContainer" class="token-container" style="display: none;">
+            <input type="text" id="accessToken" readonly />
+            <button type="button" onclick="copyToken()">Copy Token</button>
+        </div>
     </div>
-  </div>
 
-  <script>
-    function copyToken() {
-      const tokenInput = document.getElementById("accessToken");
-      tokenInput.select();
-      tokenInput.setSelectionRange(0, 99999);
-      navigator.clipboard.writeText(tokenInput.value)
-        .then(() => alert("Token copied to clipboard!"))
-        .catch(() => alert("Failed to copy token"));
-    }
+    <script>
+        function copyToken() {
+            const tokenInput = document.getElementById("accessToken");
+            tokenInput.select();
+            tokenInput.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(tokenInput.value)
+                .then(() => alert("Token copied to clipboard!"))
+                .catch(() => alert("Failed to copy token"));
+        }
 
-    document.getElementById("apiForm").addEventListener("submit", async function(e) {
-      e.preventDefault();
+        document.getElementById("apiForm").addEventListener("submit", async function (e) {
+            e.preventDefault();
 
-      const url = document.getElementById("url").value.trim();
-      const method = document.getElementById("method").value;
-      const jwt = document.getElementById("jwt").value.trim();
-      const includeJwt = document.getElementById("includeJwt").checked;
-      const fileInput = document.getElementById("file");
-      const includeFile = document.getElementById("includeFile").checked;
-      const jsonBody = document.getElementById("jsonBody").value.trim();
-      const responseBox = document.getElementById("responseBox");
-      const tokenContainer = document.getElementById("tokenContainer");
-      const accessTokenField = document.getElementById("accessToken");
+            const url = document.getElementById("url").value.trim();
+            const method = document.getElementById("method").value;
+            const jwt = document.getElementById("jwt").value.trim();
+            const includeJwt = document.getElementById("includeJwt").checked;
+            const fileInput = document.getElementById("file");
+            const includeFile = document.getElementById("includeFile").checked;
+            const jsonBody = document.getElementById("jsonBody").value.trim();
+            const responseBox = document.getElementById("responseBox");
+            const tokenContainer = document.getElementById("tokenContainer");
+            const accessTokenField = document.getElementById("accessToken");
 
-      tokenContainer.style.display = "none";
-      responseBox.textContent = "Waiting for response...";
+            tokenContainer.style.display = "none";
+            responseBox.textContent = "Waiting for response...";
 
-      if (!url.startsWith("http://localhost")) {
-        responseBox.textContent = "Only localhost requests are allowed!";
-        responseBox.style.color = "red";
-        return;
-      }
-
-      const headers = {};
-      if (includeJwt && jwt) {
-        headers["Authorization"] = jwt;
-      }
-
-      let body = null;
-      let useForm = includeFile && fileInput.files.length > 0;
-      const hasJsonBody = jsonBody !== "";
-
-      if (["POST", "PUT"].includes(method)) {
-        if (useForm) {
-          body = new FormData();
-          body.append("file", fileInput.files[0]);
-
-          if (hasJsonBody) {
-            try {
-              const json = JSON.parse(jsonBody);
-              for (const key in json) {
-                body.append(key, json[key]);
-              }
-            } catch (err) {
-              responseBox.textContent = "Invalid JSON format.";
-              responseBox.style.color = "red";
-              return;
+            if (!url.startsWith("http://localhost")) {
+                responseBox.textContent = "Only localhost requests are allowed!";
+                responseBox.style.color = "red";
+                return;
             }
-          }
-        } else if (hasJsonBody) {
-          try {
-            body = JSON.stringify(JSON.parse(jsonBody));
-            headers["Content-Type"] = "application/json";
-          } catch (err) {
-            responseBox.textContent = "Invalid JSON format.";
-            responseBox.style.color = "red";
-            return;
-          }
-        }
-      }
 
-      try {
-        const res = await fetch(url, {
-          method,
-          headers,
-          body: ["POST", "PUT"].includes(method) ? body : null,
+            const headers = {};
+            if (includeJwt && jwt) {
+                headers["Authorization"] = jwt;
+            }
+
+            let body = null;
+            let useForm = includeFile && fileInput.files.length > 0;
+            const hasJsonBody = jsonBody !== "";
+
+            if (["POST", "PUT"].includes(method)) {
+                if (useForm) {
+                    body = new FormData();
+                    body.append("file", fileInput.files[0]);
+
+                    if (hasJsonBody) {
+                        try {
+                            const json = JSON.parse(jsonBody);
+                            for (const key in json) {
+                                body.append(key, json[key]);
+                            }
+                        } catch (err) {
+                            responseBox.textContent = "Invalid JSON format.";
+                            responseBox.style.color = "red";
+                            return;
+                        }
+                    }
+                } else if (hasJsonBody) {
+                    try {
+                        body = JSON.stringify(JSON.parse(jsonBody));
+                        if (!useForm && hasJsonBody) {
+                            headers["Content-Type"] = "application/json";
+                        }
+                    } catch (err) {
+                        responseBox.textContent = "Invalid JSON format.";
+                        responseBox.style.color = "red";
+                        return;
+                    }
+                }
+            }
+
+            try {
+                const res = await fetch(url, {
+                    method,
+                    headers,
+                    body: ["POST", "PUT"].includes(method) ? body : null,
+                });
+
+                const contentType = res.headers.get("content-type");
+                let resultText = "";
+                let json = null;
+
+                if (contentType && contentType.includes("application/json")) {
+                    json = await res.json();
+                    resultText = JSON.stringify(json, null, 2);
+                } else {
+                    resultText = await res.text();
+                }
+
+                responseBox.textContent = `Status: ${res.status} ${res.statusText}\n\n${resultText}`;
+                responseBox.style.color = res.ok ? "#22543d" : "red";
+
+                if (json && json.access_token) {
+                    accessTokenField.value = json.access_token;
+                    tokenContainer.style.display = "flex";
+                }
+            } catch (err) {
+                responseBox.textContent = `Error: ${err.message}`;
+                responseBox.style.color = "red";
+            }
         });
-
-        const contentType = res.headers.get("content-type");
-        let resultText = "";
-        let json = null;
-
-        if (contentType && contentType.includes("application/json")) {
-          json = await res.json();
-          resultText = JSON.stringify(json, null, 2);
-        } else {
-          resultText = await res.text();
-        }
-
-        responseBox.textContent = `Status: ${res.status} ${res.statusText}\n\n${resultText}`;
-        responseBox.style.color = res.ok ? "#22543d" : "red";
-
-        if (json && json.access_token) {
-          accessTokenField.value = json.access_token;
-          tokenContainer.style.display = "flex";
-        }
-      } catch (err) {
-        responseBox.textContent = `Error: ${err.message}`;
-        responseBox.style.color = "red";
-      }
-    });
-  </script>
+    </script>
 </body>
+
 </html>
