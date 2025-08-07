@@ -1,85 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Local API Tester</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="style.css" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        }
-        
-        .sidebar-transition {
-            transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
-        }
-        
-        .code-block {
-            font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
-        }
-        
-        .method-get { @apply bg-blue-100 text-blue-800; }
-        .method-post { @apply bg-green-100 text-green-800; }
-        .method-put { @apply bg-yellow-100 text-yellow-800; }
-        .method-delete { @apply bg-red-100 text-red-800; }
-    </style>
 </head>
-<body class="bg-gray-100">
+
+<body class="bg-gray-100 font-inter">
     <!-- Sidebar -->
     <div id="sidebar" class="fixed top-0 left-0 h-full bg-white shadow-lg z-50 sidebar-transition w-64">
         <!-- Sidebar Header -->
         <div class="flex items-center justify-between p-4 border-b border-gray-200">
-            <h2 class="font-semibold text-gray-900">API Tools</h2>
-            <button id="closeSidebar" class="p-2 rounded-lg hover:bg-gray-100 transition-colors">
-                <!-- Close Icon -->
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-            </button>
+            <h2 class="font-semibold text-gray-900">LocalPostman</h2>
         </div>
-        
+
         <!-- Sidebar Navigation -->
-        <nav class="p-4 space-y-2">
-            <a href="#" class="nav-item active" data-section="tester">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path>
+        <nav class="p-4 space-y-[18px]">
+            <a href="#" class="flex  active" data-section="tester">
+                <svg class="w-7 h-7 text-green-600 mr-[15px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z">
+                    </path>
                 </svg>
                 <span>API Tester</span>
             </a>
-            
-            <a href="#" class="nav-item" data-section="history">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+
+            <a href="#" class="flex " data-section="history">
+                <svg class="w-7 h-7 text-green-600 mr-[15px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
                 <span>Request History</span>
             </a>
-            
-            <a href="#" class="nav-item" data-section="environments">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
+
+            <a href="#" class="flex " data-section="environments">
+                <svg class="w-7 h-7 text-green-600 mr-[15px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9">
+                    </path>
                 </svg>
                 <span>Environments</span>
             </a>
-            
-            <a href="#" class="nav-item" data-section="collections">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+
+            <a href="#" class="flex " data-section="collections">
+                <svg class="w-7 h-7 text-green-600 mr-[15px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+                    </path>
                 </svg>
                 <span>Collections</span>
             </a>
-            
-            <a href="#" class="nav-item" data-section="settings">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+
+            <a href="#" class="flex " data-section="settings">
+                <svg class="w-7 h-7 text-green-600 mr-[15px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                    </path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                 </svg>
                 <span>Settings</span>
             </a>
         </nav>
     </div>
 
-    <!-- Sidebar Overlay (for mobile) -->
+    <!-- Sidebar Overlay -->
     <div id="sidebarOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden lg:hidden"></div>
 
     <!-- Main Content -->
@@ -89,21 +78,21 @@
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-4">
                     <button id="toggleSidebar" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors">
-                        <!-- Menu Icon -->
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
                         </svg>
                     </button>
                     <div>
                         <h1 class="text-xl font-semibold text-gray-900">Local API Tester</h1>
-                        <p class="text-sm text-gray-600">Test your localhost APIs with a clean, Postman-inspired interface</p>
+                        <p class="text-sm text-gray-600">Test your localhost APIs with a clean, Postman-inspired
+                            interface</p>
                     </div>
                 </div>
-                
                 <button id="collapseSidebar" class="hidden lg:flex p-2 rounded-lg hover:bg-gray-100 transition-colors">
-                    <!-- Collapse Icon -->
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path>
                     </svg>
                 </button>
             </div>
@@ -117,68 +106,69 @@
                     <!-- Request Panel -->
                     <div class="bg-white rounded-lg shadow-sm border p-6">
                         <h2 class="text-gray-900 font-medium mb-4">Request</h2>
-                        
+
                         <form id="apiForm" class="space-y-4">
                             <!-- Method and URL -->
                             <div>
                                 <label class="text-gray-700 text-sm font-medium mb-2 block">Method & URL</label>
                                 <div class="flex space-x-3">
-                                    <select id="method" class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 w-24">
+                                    <select id="method"
+                                        class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 w-24">
                                         <option value="GET">GET</option>
                                         <option value="POST">POST</option>
                                         <option value="PUT">PUT</option>
                                         <option value="DELETE">DELETE</option>
                                     </select>
-                                    <input 
-                                        type="text" 
-                                        id="url" 
-                                        class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500" 
-                                        placeholder="http://localhost:3000/api/endpoint"
-                                        required
-                                    >
+                                    <input type="text" id="url"
+                                        class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                                        placeholder="http://localhost:3000/api/endpoint" required>
                                 </div>
                             </div>
 
                             <!-- Authorization -->
                             <div>
                                 <label class="text-gray-700 text-sm font-medium mb-2 block">Authorization</label>
-                                <input 
-                                    type="text" 
-                                    id="jwt" 
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500" 
-                                    placeholder="Bearer token (optional)"
-                                >
+                                <textarea id="jwt"
+                                    class="w-full px-3 py-2 h-[150px] resize-none border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 code-block text-sm"
+                                    placeholder="Bearer token (optional)"></textarea>
+
                                 <div class="flex items-center mt-2">
-                                    <input type="checkbox" id="includeJwt" class="w-4 h-4 text-green-600 rounded focus:ring-green-500" checked>
-                                    <label for="includeJwt" class="ml-2 text-sm text-gray-600 cursor-pointer">Include authorization header</label>
+                                    <input type="checkbox" id="includeJwt"
+                                        class="w-4 h-4 text-green-600 rounded focus:ring-green-500" checked>
+                                    <label for="includeJwt" class="ml-2 text-sm text-gray-600 cursor-pointer">Include
+                                        authorization header</label>
                                 </div>
                             </div>
 
                             <!-- File Upload -->
                             <div>
                                 <label class="text-gray-700 text-sm font-medium mb-2 block">File Upload</label>
-                                <input type="file" id="file" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">
+                                <input type="file" id="file"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">
                                 <div class="flex items-center mt-2">
-                                    <input type="checkbox" id="includeFile" class="w-4 h-4 text-green-600 rounded focus:ring-green-500">
-                                    <label for="includeFile" class="ml-2 text-sm text-gray-600 cursor-pointer">Attach file to request</label>
+                                    <input type="checkbox" id="includeFile"
+                                        class="w-4 h-4 text-green-600 rounded focus:ring-green-500">
+                                    <label for="includeFile" class="ml-2 text-sm text-gray-600 cursor-pointer">Attach
+                                        file to request</label>
                                 </div>
                             </div>
 
                             <!-- JSON Body -->
                             <div>
                                 <label class="text-gray-700 text-sm font-medium mb-2 block">JSON Body</label>
-                                <textarea 
-                                    id="jsonBody" 
-                                    class="w-full h-32 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 code-block text-sm resize-none" 
-                                    placeholder='{\n  "name": "John Doe",\n  "email": "john@example.com"\n}'
-                                ></textarea>
+                                <textarea id="jsonBody"
+                                    class="w-full h-32 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 code-block text-sm resize-none"
+                                    placeholder='{\n  "name": "John Doe",\n  "email": "john@example.com"\n}'></textarea>
                                 <div class="flex items-center mt-2">
-                                    <input type="checkbox" id="includeBody" class="w-4 h-4 text-green-600 rounded focus:ring-green-500" checked>
-                                    <label for="includeBody" class="ml-2 text-sm text-gray-600 cursor-pointer">Include JSON body (POST/PUT)</label>
+                                    <input type="checkbox" id="includeBody"
+                                        class="w-4 h-4 text-green-600 rounded focus:ring-green-500" checked>
+                                    <label for="includeBody" class="ml-2 text-sm text-gray-600 cursor-pointer">Include
+                                        JSON body (POST/PUT)</label>
                                 </div>
                             </div>
 
-                            <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-4 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                            <button type="submit"
+                                class="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-4 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
                                 Send Request
                             </button>
                         </form>
@@ -195,7 +185,8 @@
 
                         <!-- Response Body -->
                         <div class="mb-4">
-                            <div id="responseBody" class="bg-gray-900 text-gray-100 p-4 rounded-md h-64 overflow-auto code-block text-sm whitespace-pre-wrap">
+                            <div id="responseBody"
+                                class="bg-gray-900 text-gray-100 p-4 rounded-md h-64 overflow-auto code-block text-sm ">
                                 Ready to send request...
                             </div>
                         </div>
@@ -204,16 +195,14 @@
                         <div id="tokenSection" class="bg-green-50 border border-green-200 rounded-md p-3 hidden">
                             <div class="flex justify-between items-center mb-2">
                                 <span class="text-green-700 text-sm font-medium">Access Token</span>
-                                <button id="copyTokenBtn" class="px-2 py-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs rounded transition-colors">
+                                <button id="copyTokenBtn"
+                                    class="px-2 py-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs rounded transition-colors">
                                     Copy
                                 </button>
                             </div>
-                            <input 
-                                type="text" 
-                                id="accessToken" 
-                                class="w-full px-3 py-2 bg-white border border-gray-300 rounded text-xs code-block" 
-                                readonly
-                            >
+                            <input type="text" id="accessToken"
+                                class="w-full px-3 py-2 bg-white border border-gray-300 rounded text-xs code-block"
+                                readonly>
                         </div>
                     </div>
                 </div>
@@ -250,240 +239,7 @@
         </div>
     </div>
 
-    <style>
-        .nav-item {
-            @apply flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer;
-        }
-        
-        .nav-item.active {
-            @apply bg-green-100 text-green-700 font-medium;
-        }
-        
-        .nav-item svg {
-            @apply flex-shrink-0;
-        }
-    </style>
-
-    <script>
-        // Sidebar functionality
-        const sidebar = document.getElementById('sidebar');
-        const sidebarOverlay = document.getElementById('sidebarOverlay');
-        const mainContent = document.getElementById('mainContent');
-        const toggleSidebar = document.getElementById('toggleSidebar');
-        const collapseSidebar = document.getElementById('collapseSidebar');
-        const closeSidebar = document.getElementById('closeSidebar');
-        
-        let sidebarCollapsed = false;
-        
-        // Toggle sidebar (mobile)
-        toggleSidebar.addEventListener('click', () => {
-            sidebar.classList.remove('-translate-x-full');
-            sidebarOverlay.classList.remove('hidden');
-        });
-        
-        // Close sidebar (mobile)
-        closeSidebar.addEventListener('click', () => {
-            sidebar.classList.add('-translate-x-full');
-            sidebarOverlay.classList.add('hidden');
-        });
-        
-        // Close sidebar when clicking overlay
-        sidebarOverlay.addEventListener('click', () => {
-            sidebar.classList.add('-translate-x-full');
-            sidebarOverlay.classList.add('hidden');
-        });
-        
-        // Collapse sidebar (desktop)
-        collapseSidebar.addEventListener('click', () => {
-            if (sidebarCollapsed) {
-                sidebar.style.transform = 'translateX(0)';
-                mainContent.style.marginLeft = '16rem';
-                sidebarCollapsed = false;
-            } else {
-                sidebar.style.transform = 'translateX(-100%)';
-                mainContent.style.marginLeft = '0';
-                sidebarCollapsed = true;
-            }
-        });
-        
-        // Navigation functionality
-        const navItems = document.querySelectorAll('.nav-item');
-        const contentSections = document.querySelectorAll('.content-section');
-        
-        navItems.forEach(item => {
-            item.addEventListener('click', (e) => {
-                e.preventDefault();
-                
-                // Update active nav item
-                navItems.forEach(nav => nav.classList.remove('active'));
-                item.classList.add('active');
-                
-                // Show corresponding content section
-                const sectionId = item.dataset.section + 'Section';
-                contentSections.forEach(section => section.classList.add('hidden'));
-                document.getElementById(sectionId).classList.remove('hidden');
-                
-                // Close sidebar on mobile after navigation
-                if (window.innerWidth < 1024) {
-                    sidebar.classList.add('-translate-x-full');
-                    sidebarOverlay.classList.add('hidden');
-                }
-            });
-        });
-        
-        // Responsive sidebar handling
-        function handleResize() {
-            if (window.innerWidth >= 1024) {
-                sidebar.classList.remove('-translate-x-full');
-                sidebarOverlay.classList.add('hidden');
-                if (!sidebarCollapsed) {
-                    mainContent.style.marginLeft = '16rem';
-                }
-            } else {
-                sidebar.classList.add('-translate-x-full');
-                mainContent.style.marginLeft = '0';
-            }
-        }
-        
-        window.addEventListener('resize', handleResize);
-        handleResize(); // Initial call
-        
-        // API Form functionality (existing code)
-        const form = document.getElementById('apiForm');
-        const responseBody = document.getElementById('responseBody');
-        const statusBadge = document.getElementById('statusBadge');
-        const tokenSection = document.getElementById('tokenSection');
-        const accessTokenField = document.getElementById('accessToken');
-        const copyTokenBtn = document.getElementById('copyTokenBtn');
-
-        // Copy token functionality
-        copyTokenBtn.addEventListener('click', async () => {
-            try {
-                await navigator.clipboard.writeText(accessTokenField.value);
-                copyTokenBtn.textContent = 'Copied!';
-                copyTokenBtn.classList.add('bg-green-500', 'text-white');
-                copyTokenBtn.classList.remove('bg-gray-100', 'hover:bg-gray-200', 'text-gray-700');
-                setTimeout(() => {
-                    copyTokenBtn.textContent = 'Copy';
-                    copyTokenBtn.classList.remove('bg-green-500', 'text-white');
-                    copyTokenBtn.classList.add('bg-gray-100', 'hover:bg-gray-200', 'text-gray-700');
-                }, 2000);
-            } catch (err) {
-                alert('Failed to copy token to clipboard');
-            }
-        });
-
-        // Update status badge
-        function updateStatus(status, statusText, isError = false) {
-            statusBadge.classList.remove('hidden');
-            statusBadge.textContent = `${status} ${statusText}`;
-            statusBadge.className = `px-2 py-1 text-xs font-semibold rounded ${isError ? 'method-delete' : 'method-get'}`;
-        }
-
-        // Form submission
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const url = document.getElementById('url').value.trim();
-            const method = document.getElementById('method').value;
-            const jwt = document.getElementById('jwt').value.trim();
-            const includeJwt = document.getElementById('includeJwt').checked;
-            const fileInput = document.getElementById('file');
-            const includeFile = document.getElementById('includeFile').checked;
-            const jsonBody = document.getElementById('jsonBody').value.trim();
-            const includeBody = document.getElementById('includeBody').checked;
-
-            // Reset UI
-            tokenSection.classList.add('hidden');
-            statusBadge.classList.add('hidden');
-            responseBody.textContent = 'Sending request...';
-
-            // Validate localhost URL
-            if (!url.startsWith('http://localhost') && !url.startsWith('https://localhost')) {
-                responseBody.textContent = 'Error: Only localhost URLs are allowed for security reasons.\n\nExample: http://localhost:3000/api/endpoint';
-                updateStatus('400', 'Invalid URL', true);
-                return;
-            }
-
-            // Prepare headers
-            const headers = {};
-            if (includeJwt && jwt) {
-                headers['Authorization'] = jwt.startsWith('Bearer ') ? jwt : `Bearer ${jwt}`;
-            }
-
-            // Prepare body
-            let body = null;
-            const isFormData = includeFile && fileInput.files.length > 0;
-
-            if (['POST', 'PUT'].includes(method)) {
-                if (isFormData) {
-                    body = new FormData();
-                    body.append('file', fileInput.files[0]);
-                    
-                    if (includeBody && jsonBody) {
-                        try {
-                            const json = JSON.parse(jsonBody);
-                            Object.keys(json).forEach(key => {
-                                body.append(key, json[key]);
-                            });
-                        } catch (err) {
-                            responseBody.textContent = `JSON Parse Error: ${err.message}`;
-                            updateStatus('400', 'Bad Request', true);
-                            return;
-                        }
-                    }
-                } else if (includeBody && jsonBody) {
-                    try {
-                        body = JSON.stringify(JSON.parse(jsonBody), null, 2);
-                        headers['Content-Type'] = 'application/json';
-                    } catch (err) {
-                        responseBody.textContent = `JSON Parse Error: ${err.message}`;
-                        updateStatus('400', 'Bad Request', true);
-                        return;
-                    }
-                }
-            }
-
-            try {
-                const startTime = Date.now();
-                const response = await fetch(url, {
-                    method,
-                    headers,
-                    body
-                });
-
-                const endTime = Date.now();
-                const duration = endTime - startTime;
-
-                // Update status
-                updateStatus(response.status, response.statusText, !response.ok);
-
-                // Parse response
-                const contentType = response.headers.get('Content-Type') || '';
-                let responseText = '';
-
-                if (contentType.includes('application/json')) {
-                    const json = await response.json();
-                    responseText = JSON.stringify(json, null, 2);
-
-                    // Check for access token
-                    if (json.access_token) {
-                        accessTokenField.value = json.access_token;
-                        tokenSection.classList.remove('hidden');
-                    }
-                } else {
-                    responseText = await response.text();
-                }
-
-                // Display response
-                const responseInfo = `Status: ${response.status} ${response.statusText}\nTime: ${duration}ms\nContent-Type: ${contentType}\n\n${responseText}`;
-                responseBody.textContent = responseInfo;
-
-            } catch (error) {
-                responseBody.textContent = `Network Error: ${error.message}\n\nPossible causes:\n• Server is not running\n• CORS policy restriction\n• Invalid URL or port\n• Network connectivity issue`;
-                updateStatus('ERR', 'Network Error', true);
-            }
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
+
 </html>

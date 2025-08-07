@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.sidebar-transition {
+  transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
+}
+
+.code-block {
+  font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+}
