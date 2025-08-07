@@ -234,7 +234,7 @@
       try {
         const res = await fetch(url, {
           method,
-          headers: useForm ? {} : headers,
+          headers,
           body: ["POST", "PUT"].includes(method) ? body : null,
         });
 
