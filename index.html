@@ -1,415 +1,489 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Localhost API Tester</title>
-
-  <!-- Google Fonts: Inter -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
-  <style>
-    :root {
-      --primary: #2f855a;
-      --primary-dark: #22543d;
-      --primary-light: #48bb78;
-      --bg: #0f172a;
-      --card-bg: #1e293b;
-      --text: #e2e8f0;
-      --text-light: #94a3b8;
-      --border: #334155;
-      --success: #65a30d;
-      --error: #e53e3e;
-      --hover: #38a169;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
-      padding: 60px 20px;
-      transition: background 0.3s ease;
-    }
-
-    .container {
-      max-width: 800px;
-      width: 100%;
-      background: var(--card-bg);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--border);
-      padding: 36px;
-      border-radius: 18px;
-      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
-      color: var(--text);
-    }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 28px;
-      font-weight: 700;
-      font-size: 24px;
-      color: var(--primary-light);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    h2 i {
-      color: var(--primary-light);
-    }
-
-    label {
-      display: block;
-      margin-top: 18px;
-      font-weight: 600;
-      font-size: 14px;
-      color: var(--text-light);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    label i {
-      color: var(--primary-light);
-      font-size: 14px;
-    }
-
-    input[type="text"],
-    select,
-    input[type="file"],
-    textarea {
-      width: 100%;
-      padding: 12px 14px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      margin-top: 8px;
-      background: #24324a;
-      color: var(--text);
-      font-family: 'Inter', monospace;
-      font-size: 14px;
-      transition: all 0.3s ease;
-    }
-
-    input[type="text"]:focus,
-    select:focus,
-    textarea:focus,
-    input[type="file"]:focus {
-      outline: none;
-      border-color: var(--primary-light);
-      box-shadow: 0 0 0 3px rgba(72, 187, 120, 0.3);
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 110px;
-      line-height: 1.5;
-    }
-
-    .checkbox-row {
-      display: flex;
-      align-items: center;
-      margin-top: 8px;
-      gap: 10px;
-      font-size: 14px;
-    }
-
-    .checkbox-row input[type="checkbox"] {
-      accent-color: var(--primary-light);
-      transform: scale(1.1);
-    }
-
-    .checkbox-row label {
-      margin: 0;
-      font-weight: 500;
-      color: var(--text-light);
-      cursor: pointer;
-    }
-
-    button {
-      margin-top: 24px;
-      width: 100%;
-      padding: 14px;
-      background-color: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      box-shadow: 0 4px 12px rgba(56, 161, 105, 0.3);
-    }
-
-    button:hover {
-      background-color: var(--hover);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(56, 161, 105, 0.4);
-    }
-
-    button:active {
-      transform: translateY(0);
-    }
-
-    .message {
-      margin-top: 20px;
-      text-align: center;
-      font-weight: 600;
-    }
-
-    #responseBox {
-      margin-top: 24px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 18px;
-      background-color: #1a2332;
-      white-space: pre-wrap;
-      font-family: 'Inter', monospace;
-      font-size: 14px;
-      color: #a8d8a0;
-      line-height: 1.6;
-      min-height: 80px;
-      max-height: 400px;
-      overflow-y: auto;
-      transition: border-color 0.3s;
-    }
-
-    .token-container {
-      margin-top: 20px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .token-container input {
-      flex-grow: 1;
-      font-size: 14px;
-      padding: 10px 12px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: #24324a;
-      color: var(--text);
-      font-family: monospace;
-    }
-
-    .token-container button {
-      width: auto;
-      padding: 10px 16px;
-      margin-top: 0;
-      background-color: #4a5568;
-      font-size: 14px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .token-container button:hover {
-      background-color: #2d3748;
-    }
-
-    .icon-success {
-      color: var(--success);
-    }
-
-    .icon-error {
-      color: var(--error);
-    }
-
-    /* Loading indicator */
-    .loading {
-      opacity: 0.7;
-      pointer-events: none;
-      position: relative;
-    }
-
-    .loading::after {
-      content: " ⏳";
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local API Tester</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        
+        .sidebar-transition {
+            transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
+        }
+        
+        .code-block {
+            font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+        }
+        
+        .method-get { @apply bg-blue-100 text-blue-800; }
+        .method-post { @apply bg-green-100 text-green-800; }
+        .method-put { @apply bg-yellow-100 text-yellow-800; }
+        .method-delete { @apply bg-red-100 text-red-800; }
+    </style>
 </head>
-
-<body>
-  <div class="container">
-    <h2><i class="fas fa-plug"></i> Localhost API Tester</h2>
-    <form id="apiForm">
-      <label for="url"><i class="fas fa-link"></i> Request URL</label>
-      <input type="text" id="url" name="url" placeholder="http://localhost:3000/api" required />
-
-      <label for="method"><i class="fas fa-code"></i> HTTP Method</label>
-      <select id="method" name="method">
-        <option value="GET">GET</option>
-        <option value="POST">POST</option>
-        <option value="PUT">PUT</option>
-        <option value="DELETE">DELETE</option>
-      </select>
-
-      <label for="jwt"><i class="fas fa-key"></i> JWT Token</label>
-      <input type="text" id="jwt" name="jwt" placeholder="Enter your Bearer token..." />
-      <div class="checkbox-row">
-        <input type="checkbox" id="includeJwt" checked />
-        <label for="includeJwt">Include Authorization Header</label>
-      </div>
-
-      <label for="file"><i class="fas fa-file-upload"></i> File Upload</label>
-      <input type="file" id="file" name="file" />
-      <div class="checkbox-row">
-        <input type="checkbox" id="includeFile" />
-        <label for="includeFile">Attach File in Request</label>
-      </div>
-
-      <label for="jsonBody"><i class="fas fa-brackets-curly"></i> JSON Body (for POST/PUT)</label>
-      <textarea id="jsonBody" placeholder='{&#10;  "name": "John",&#10;  "email": "john@example.com"&#10}'></textarea>
-
-      <button type="submit">
-        <i class="fas fa-paper-plane"></i> <span>Send Request</span>
-      </button>
-    </form>
-
-    <div id="responseBox">🟢 Ready. Submit a request to see response.</div>
-
-    <div id="tokenContainer" class="token-container" style="display: none;">
-      <input type="text" id="accessToken" readonly placeholder="Access token will appear here" />
-      <button type="button" onclick="copyToken()">
-        <i class="fas fa-copy"></i> Copy
-      </button>
+<body class="bg-gray-100">
+    <!-- Sidebar -->
+    <div id="sidebar" class="fixed top-0 left-0 h-full bg-white shadow-lg z-50 sidebar-transition w-64">
+        <!-- Sidebar Header -->
+        <div class="flex items-center justify-between p-4 border-b border-gray-200">
+            <h2 class="font-semibold text-gray-900">API Tools</h2>
+            <button id="closeSidebar" class="p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                <!-- Close Icon -->
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Sidebar Navigation -->
+        <nav class="p-4 space-y-2">
+            <a href="#" class="nav-item active" data-section="tester">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path>
+                </svg>
+                <span>API Tester</span>
+            </a>
+            
+            <a href="#" class="nav-item" data-section="history">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span>Request History</span>
+            </a>
+            
+            <a href="#" class="nav-item" data-section="environments">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
+                </svg>
+                <span>Environments</span>
+            </a>
+            
+            <a href="#" class="nav-item" data-section="collections">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                </svg>
+                <span>Collections</span>
+            </a>
+            
+            <a href="#" class="nav-item" data-section="settings">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+                <span>Settings</span>
+            </a>
+        </nav>
     </div>
-  </div>
 
-  <script>
-    function copyToken() {
-      const tokenInput = document.getElementById("accessToken");
-      tokenInput.select();
-      tokenInput.setSelectionRange(0, 99999);
-      navigator.clipboard.writeText(tokenInput.value)
-        .then(() => {
-          const btn = tokenInput.nextElementSibling;
-          const originalText = btn.innerHTML;
-          btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-          btn.style.backgroundColor = '#65a30d';
-          setTimeout(() => {
-            btn.innerHTML = originalText;
-            btn.style.backgroundColor = '';
-          }, 2000);
-        })
-        .catch(() => {
-          alert("Failed to copy token. Try manually selecting it.");
+    <!-- Sidebar Overlay (for mobile) -->
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden lg:hidden"></div>
+
+    <!-- Main Content -->
+    <div id="mainContent" class="transition-all duration-300 ease-in-out ml-64">
+        <!-- Top Bar -->
+        <div class="bg-white shadow-sm border-b border-gray-200 px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <button id="toggleSidebar" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                        <!-- Menu Icon -->
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                    <div>
+                        <h1 class="text-xl font-semibold text-gray-900">Local API Tester</h1>
+                        <p class="text-sm text-gray-600">Test your localhost APIs with a clean, Postman-inspired interface</p>
+                    </div>
+                </div>
+                
+                <button id="collapseSidebar" class="hidden lg:flex p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                    <!-- Collapse Icon -->
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Content Sections -->
+        <div class="p-6">
+            <!-- API Tester Section -->
+            <div id="testerSection" class="content-section">
+                <div class="grid lg:grid-cols-2 gap-6">
+                    <!-- Request Panel -->
+                    <div class="bg-white rounded-lg shadow-sm border p-6">
+                        <h2 class="text-gray-900 font-medium mb-4">Request</h2>
+                        
+                        <form id="apiForm" class="space-y-4">
+                            <!-- Method and URL -->
+                            <div>
+                                <label class="text-gray-700 text-sm font-medium mb-2 block">Method & URL</label>
+                                <div class="flex space-x-3">
+                                    <select id="method" class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 w-24">
+                                        <option value="GET">GET</option>
+                                        <option value="POST">POST</option>
+                                        <option value="PUT">PUT</option>
+                                        <option value="DELETE">DELETE</option>
+                                    </select>
+                                    <input 
+                                        type="text" 
+                                        id="url" 
+                                        class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500" 
+                                        placeholder="http://localhost:3000/api/endpoint"
+                                        required
+                                    >
+                                </div>
+                            </div>
+
+                            <!-- Authorization -->
+                            <div>
+                                <label class="text-gray-700 text-sm font-medium mb-2 block">Authorization</label>
+                                <input 
+                                    type="text" 
+                                    id="jwt" 
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500" 
+                                    placeholder="Bearer token (optional)"
+                                >
+                                <div class="flex items-center mt-2">
+                                    <input type="checkbox" id="includeJwt" class="w-4 h-4 text-green-600 rounded focus:ring-green-500" checked>
+                                    <label for="includeJwt" class="ml-2 text-sm text-gray-600 cursor-pointer">Include authorization header</label>
+                                </div>
+                            </div>
+
+                            <!-- File Upload -->
+                            <div>
+                                <label class="text-gray-700 text-sm font-medium mb-2 block">File Upload</label>
+                                <input type="file" id="file" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">
+                                <div class="flex items-center mt-2">
+                                    <input type="checkbox" id="includeFile" class="w-4 h-4 text-green-600 rounded focus:ring-green-500">
+                                    <label for="includeFile" class="ml-2 text-sm text-gray-600 cursor-pointer">Attach file to request</label>
+                                </div>
+                            </div>
+
+                            <!-- JSON Body -->
+                            <div>
+                                <label class="text-gray-700 text-sm font-medium mb-2 block">JSON Body</label>
+                                <textarea 
+                                    id="jsonBody" 
+                                    class="w-full h-32 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 code-block text-sm resize-none" 
+                                    placeholder='{\n  "name": "John Doe",\n  "email": "john@example.com"\n}'
+                                ></textarea>
+                                <div class="flex items-center mt-2">
+                                    <input type="checkbox" id="includeBody" class="w-4 h-4 text-green-600 rounded focus:ring-green-500" checked>
+                                    <label for="includeBody" class="ml-2 text-sm text-gray-600 cursor-pointer">Include JSON body (POST/PUT)</label>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-4 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                                Send Request
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Response Panel -->
+                    <div class="bg-white rounded-lg shadow-sm border p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-gray-900 font-medium">Response</h2>
+                            <div id="statusBadge" class="px-2 py-1 text-xs font-semibold rounded method-get hidden">
+                                200 OK
+                            </div>
+                        </div>
+
+                        <!-- Response Body -->
+                        <div class="mb-4">
+                            <div id="responseBody" class="bg-gray-900 text-gray-100 p-4 rounded-md h-64 overflow-auto code-block text-sm whitespace-pre-wrap">
+                                Ready to send request...
+                            </div>
+                        </div>
+
+                        <!-- Token Section -->
+                        <div id="tokenSection" class="bg-green-50 border border-green-200 rounded-md p-3 hidden">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-green-700 text-sm font-medium">Access Token</span>
+                                <button id="copyTokenBtn" class="px-2 py-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs rounded transition-colors">
+                                    Copy
+                                </button>
+                            </div>
+                            <input 
+                                type="text" 
+                                id="accessToken" 
+                                class="w-full px-3 py-2 bg-white border border-gray-300 rounded text-xs code-block" 
+                                readonly
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other Sections (Placeholders) -->
+            <div id="historySection" class="content-section hidden">
+                <div class="bg-white rounded-lg shadow-sm border p-6">
+                    <h2 class="text-xl font-semibold mb-4">Request History</h2>
+                    <p class="text-gray-600">Your recent API requests will appear here.</p>
+                </div>
+            </div>
+
+            <div id="environmentsSection" class="content-section hidden">
+                <div class="bg-white rounded-lg shadow-sm border p-6">
+                    <h2 class="text-xl font-semibold mb-4">Environments</h2>
+                    <p class="text-gray-600">Manage different API environments (Development, Staging, Production).</p>
+                </div>
+            </div>
+
+            <div id="collectionsSection" class="content-section hidden">
+                <div class="bg-white rounded-lg shadow-sm border p-6">
+                    <h2 class="text-xl font-semibold mb-4">Collections</h2>
+                    <p class="text-gray-600">Save and organize your API requests into collections.</p>
+                </div>
+            </div>
+
+            <div id="settingsSection" class="content-section hidden">
+                <div class="bg-white rounded-lg shadow-sm border p-6">
+                    <h2 class="text-xl font-semibold mb-4">Settings</h2>
+                    <p class="text-gray-600">Configure your API testing preferences.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .nav-item {
+            @apply flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer;
+        }
+        
+        .nav-item.active {
+            @apply bg-green-100 text-green-700 font-medium;
+        }
+        
+        .nav-item svg {
+            @apply flex-shrink-0;
+        }
+    </style>
+
+    <script>
+        // Sidebar functionality
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const mainContent = document.getElementById('mainContent');
+        const toggleSidebar = document.getElementById('toggleSidebar');
+        const collapseSidebar = document.getElementById('collapseSidebar');
+        const closeSidebar = document.getElementById('closeSidebar');
+        
+        let sidebarCollapsed = false;
+        
+        // Toggle sidebar (mobile)
+        toggleSidebar.addEventListener('click', () => {
+            sidebar.classList.remove('-translate-x-full');
+            sidebarOverlay.classList.remove('hidden');
         });
-    }
-
-    document.getElementById("apiForm").addEventListener("submit", async function (e) {
-      e.preventDefault();
-
-      const url = document.getElementById("url").value.trim();
-      const method = document.getElementById("method").value;
-      const jwt = document.getElementById("jwt").value.trim();
-      const includeJwt = document.getElementById("includeJwt").checked;
-      const fileInput = document.getElementById("file");
-      const includeFile = document.getElementById("includeFile").checked;
-      const jsonBody = document.getElementById("jsonBody").value.trim();
-      const responseBox = document.getElementById("responseBox");
-      const tokenContainer = document.getElementById("tokenContainer");
-      const accessTokenField = document.getElementById("accessToken");
-
-      // Reset
-      tokenContainer.style.display = "none";
-      responseBox.textContent = "🔄 Sending request...";
-      responseBox.style.color = "#94a3b8";
-
-      // Validate localhost
-      if (!url.startsWith("http://localhost") && !url.startsWith("https://localhost")) {
-        responseBox.textContent = "⛔ Only localhost requests are allowed!";
-        responseBox.style.color = var(--error);
-        return;
-      }
-
-      const headers = {};
-      if (includeJwt && jwt) {
-        headers["Authorization"] = jwt.startsWith("Bearer ") ? jwt : `Bearer ${jwt}`;
-      }
-
-      let body = null;
-      let useForm = includeFile && fileInput.files.length > 0;
-
-      if (["POST", "PUT"].includes(method)) {
-        if (useForm) {
-          body = new FormData();
-          body.append("file", fileInput.files[0]);
-          if (jsonBody) {
-            try {
-              const json = JSON.parse(jsonBody);
-              for (const key in json) {
-                body.append(key, json[key]);
-              }
-            } catch (err) {
-              responseBox.textContent = "❌ Invalid JSON format in body.";
-              responseBox.style.color = var(--error);
-              return;
+        
+        // Close sidebar (mobile)
+        closeSidebar.addEventListener('click', () => {
+            sidebar.classList.add('-translate-x-full');
+            sidebarOverlay.classList.add('hidden');
+        });
+        
+        // Close sidebar when clicking overlay
+        sidebarOverlay.addEventListener('click', () => {
+            sidebar.classList.add('-translate-x-full');
+            sidebarOverlay.classList.add('hidden');
+        });
+        
+        // Collapse sidebar (desktop)
+        collapseSidebar.addEventListener('click', () => {
+            if (sidebarCollapsed) {
+                sidebar.style.transform = 'translateX(0)';
+                mainContent.style.marginLeft = '16rem';
+                sidebarCollapsed = false;
+            } else {
+                sidebar.style.transform = 'translateX(-100%)';
+                mainContent.style.marginLeft = '0';
+                sidebarCollapsed = true;
             }
-          }
-          // FormData sets content-type automatically
-        } else if (jsonBody) {
-          try {
-            body = JSON.stringify(JSON.parse(jsonBody));
-            headers["Content-Type"] = "application/json";
-          } catch (err) {
-            responseBox.textContent = "❌ Invalid JSON format.";
-            responseBox.style.color = var(--error);
-            return;
-          }
+        });
+        
+        // Navigation functionality
+        const navItems = document.querySelectorAll('.nav-item');
+        const contentSections = document.querySelectorAll('.content-section');
+        
+        navItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Update active nav item
+                navItems.forEach(nav => nav.classList.remove('active'));
+                item.classList.add('active');
+                
+                // Show corresponding content section
+                const sectionId = item.dataset.section + 'Section';
+                contentSections.forEach(section => section.classList.add('hidden'));
+                document.getElementById(sectionId).classList.remove('hidden');
+                
+                // Close sidebar on mobile after navigation
+                if (window.innerWidth < 1024) {
+                    sidebar.classList.add('-translate-x-full');
+                    sidebarOverlay.classList.add('hidden');
+                }
+            });
+        });
+        
+        // Responsive sidebar handling
+        function handleResize() {
+            if (window.innerWidth >= 1024) {
+                sidebar.classList.remove('-translate-x-full');
+                sidebarOverlay.classList.add('hidden');
+                if (!sidebarCollapsed) {
+                    mainContent.style.marginLeft = '16rem';
+                }
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                mainContent.style.marginLeft = '0';
+            }
         }
-      }
+        
+        window.addEventListener('resize', handleResize);
+        handleResize(); // Initial call
+        
+        // API Form functionality (existing code)
+        const form = document.getElementById('apiForm');
+        const responseBody = document.getElementById('responseBody');
+        const statusBadge = document.getElementById('statusBadge');
+        const tokenSection = document.getElementById('tokenSection');
+        const accessTokenField = document.getElementById('accessToken');
+        const copyTokenBtn = document.getElementById('copyTokenBtn');
 
-      try {
-        const res = await fetch(url, {
-          method,
-          headers,
-          body: ["GET", "DELETE"].includes(method) ? undefined : body,
+        // Copy token functionality
+        copyTokenBtn.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(accessTokenField.value);
+                copyTokenBtn.textContent = 'Copied!';
+                copyTokenBtn.classList.add('bg-green-500', 'text-white');
+                copyTokenBtn.classList.remove('bg-gray-100', 'hover:bg-gray-200', 'text-gray-700');
+                setTimeout(() => {
+                    copyTokenBtn.textContent = 'Copy';
+                    copyTokenBtn.classList.remove('bg-green-500', 'text-white');
+                    copyTokenBtn.classList.add('bg-gray-100', 'hover:bg-gray-200', 'text-gray-700');
+                }, 2000);
+            } catch (err) {
+                alert('Failed to copy token to clipboard');
+            }
         });
 
-        const contentType = res.headers.get("content-type");
-        let resultText = "";
-        let json = null;
-
-        if (contentType && contentType.includes("application/json")) {
-          json = await res.json();
-          resultText = JSON.stringify(json, null, 2);
-        } else {
-          resultText = await res.text();
+        // Update status badge
+        function updateStatus(status, statusText, isError = false) {
+            statusBadge.classList.remove('hidden');
+            statusBadge.textContent = `${status} ${statusText}`;
+            statusBadge.className = `px-2 py-1 text-xs font-semibold rounded ${isError ? 'method-delete' : 'method-get'}`;
         }
 
-        responseBox.textContent = `📡 ${res.status} ${res.statusText}\n\n${resultText}`;
-        responseBox.style.color = res.ok ? "#a8d8a0" : "#f87171";
+        // Form submission
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-        if (json && json.access_token) {
-          accessTokenField.value = json.access_token;
-          tokenContainer.style.display = "flex";
-        }
+            const url = document.getElementById('url').value.trim();
+            const method = document.getElementById('method').value;
+            const jwt = document.getElementById('jwt').value.trim();
+            const includeJwt = document.getElementById('includeJwt').checked;
+            const fileInput = document.getElementById('file');
+            const includeFile = document.getElementById('includeFile').checked;
+            const jsonBody = document.getElementById('jsonBody').value.trim();
+            const includeBody = document.getElementById('includeBody').checked;
 
-      } catch (err) {
-        responseBox.textContent = `⚠️ Network Error: ${err.message}`;
-        responseBox.style.color = var(--error);
-      }
-    });
-  </script>
+            // Reset UI
+            tokenSection.classList.add('hidden');
+            statusBadge.classList.add('hidden');
+            responseBody.textContent = 'Sending request...';
+
+            // Validate localhost URL
+            if (!url.startsWith('http://localhost') && !url.startsWith('https://localhost')) {
+                responseBody.textContent = 'Error: Only localhost URLs are allowed for security reasons.\n\nExample: http://localhost:3000/api/endpoint';
+                updateStatus('400', 'Invalid URL', true);
+                return;
+            }
+
+            // Prepare headers
+            const headers = {};
+            if (includeJwt && jwt) {
+                headers['Authorization'] = jwt.startsWith('Bearer ') ? jwt : `Bearer ${jwt}`;
+            }
+
+            // Prepare body
+            let body = null;
+            const isFormData = includeFile && fileInput.files.length > 0;
+
+            if (['POST', 'PUT'].includes(method)) {
+                if (isFormData) {
+                    body = new FormData();
+                    body.append('file', fileInput.files[0]);
+                    
+                    if (includeBody && jsonBody) {
+                        try {
+                            const json = JSON.parse(jsonBody);
+                            Object.keys(json).forEach(key => {
+                                body.append(key, json[key]);
+                            });
+                        } catch (err) {
+                            responseBody.textContent = `JSON Parse Error: ${err.message}`;
+                            updateStatus('400', 'Bad Request', true);
+                            return;
+                        }
+                    }
+                } else if (includeBody && jsonBody) {
+                    try {
+                        body = JSON.stringify(JSON.parse(jsonBody), null, 2);
+                        headers['Content-Type'] = 'application/json';
+                    } catch (err) {
+                        responseBody.textContent = `JSON Parse Error: ${err.message}`;
+                        updateStatus('400', 'Bad Request', true);
+                        return;
+                    }
+                }
+            }
+
+            try {
+                const startTime = Date.now();
+                const response = await fetch(url, {
+                    method,
+                    headers,
+                    body
+                });
+
+                const endTime = Date.now();
+                const duration = endTime - startTime;
+
+                // Update status
+                updateStatus(response.status, response.statusText, !response.ok);
+
+                // Parse response
+                const contentType = response.headers.get('Content-Type') || '';
+                let responseText = '';
+
+                if (contentType.includes('application/json')) {
+                    const json = await response.json();
+                    responseText = JSON.stringify(json, null, 2);
+
+                    // Check for access token
+                    if (json.access_token) {
+                        accessTokenField.value = json.access_token;
+                        tokenSection.classList.remove('hidden');
+                    }
+                } else {
+                    responseText = await response.text();
+                }
+
+                // Display response
+                const responseInfo = `Status: ${response.status} ${response.statusText}\nTime: ${duration}ms\nContent-Type: ${contentType}\n\n${responseText}`;
+                responseBody.textContent = responseInfo;
+
+            } catch (error) {
+                responseBody.textContent = `Network Error: ${error.message}\n\nPossible causes:\n• Server is not running\n• CORS policy restriction\n• Invalid URL or port\n• Network connectivity issue`;
+                updateStatus('ERR', 'Network Error', true);
+            }
+        });
+    </script>
 </body>
-
 </html>
