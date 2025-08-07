@@ -197,7 +197,7 @@
 
             const headers = {};
             if (includeJwt && jwt) {
-                headers["Authorization"] = jwt;
+                headers["Authorization"] = jwt.startsWith("Bearer ") ? jwt : `Bearer ${jwt}`;
             }
 
             let body = null;
