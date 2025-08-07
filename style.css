@@ -1,13 +1,98 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-}
-
-.sidebar-transition {
-  transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
-}
-
-.code-block {
-  font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
-}
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .sidebar-transition {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .content-transition {
+            transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            color: #6b7280;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .nav-item:hover {
+            background-color: #f3f4f6;
+            color: #374151;
+        }
+        
+        .nav-item.active {
+            background-color: #10b981;
+            color: white;
+        }
+        
+        .nav-item svg {
+            min-width: 20px;
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+        }
+        
+        .sidebar-collapsed .nav-item span {
+            opacity: 0;
+            width: 0;
+            overflow: hidden;
+        }
+        
+        .sidebar-collapsed .nav-item svg {
+            margin-right: 0;
+        }
+        
+        .sidebar-collapsed .nav-item {
+            justify-content: center;
+            padding: 12px;
+        }
+        
+        .code-block {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 13px;
+        }
+        
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        .file-input-wrapper input[type=file] {
+            position: absolute;
+            left: -9999px;
+        }
+        
+        .file-input-display {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            border: 2px dashed #d1d5db;
+            border-radius: 8px;
+            background-color: #f9fafb;
+            transition: all 0.2s ease;
+        }
+        
+        .file-input-display:hover {
+            border-color: #10b981;
+            background-color: #ecfdf5;
+        }
+        
+        .slide-down {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .slide-down.open {
+            max-height: 500px;
+        }

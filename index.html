@@ -4,66 +4,72 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Local API Tester</title>
+    <title>LocalPostman - Browser API Tester</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="style.css" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-100 font-inter">
+<body class="bg-gray-50">
     <!-- Sidebar -->
     <div id="sidebar" class="fixed top-0 left-0 h-full bg-white shadow-lg z-50 sidebar-transition w-64">
         <!-- Sidebar Header -->
         <div class="flex items-center justify-between p-4 border-b border-gray-200">
-            <h2 class="font-semibold text-gray-900">LocalPostman</h2>
+            <h2 id="sidebarTitle" class="font-semibold text-gray-900 transition-opacity duration-300">LocalPostman</h2>
+            <button id="collapseSidebar" class="p-1 rounded-lg hover:bg-gray-100 transition-colors">
+                <svg id="collapseIcon" class="w-5 h-5 transform transition-transform duration-300" fill="none"
+                    stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7"></path>
+                </svg>
+            </button>
         </div>
 
         <!-- Sidebar Navigation -->
-        <nav class="p-4 space-y-[18px]">
-            <a href="#" class="flex  active" data-section="tester">
-                <svg class="w-7 h-7 text-green-600 mr-[15px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <nav class="p-4 space-y-2">
+            <a href="#" class="nav-item active" data-section="tester">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z">
                     </path>
                 </svg>
-                <span>API Tester</span>
+                <span class="transition-opacity duration-300">API Tester</span>
             </a>
 
-            <a href="#" class="flex " data-section="history">
-                <svg class="w-7 h-7 text-green-600 mr-[15px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <a href="#" class="nav-item" data-section="history">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                <span>Request History</span>
+                <span class="transition-opacity duration-300">History</span>
             </a>
 
-            <a href="#" class="flex " data-section="environments">
-                <svg class="w-7 h-7 text-green-600 mr-[15px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <a href="#" class="nav-item" data-section="environments">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9">
+                        d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9 3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9">
                     </path>
                 </svg>
-                <span>Environments</span>
+                <span class="transition-opacity duration-300">Environments</span>
             </a>
 
-            <a href="#" class="flex " data-section="collections">
-                <svg class="w-7 h-7 text-green-600 mr-[15px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <a href="#" class="nav-item" data-section="collections">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
                     </path>
                 </svg>
-                <span>Collections</span>
+                <span class="transition-opacity duration-300">Collections</span>
             </a>
 
-            <a href="#" class="flex " data-section="settings">
-                <svg class="w-7 h-7 text-green-600 mr-[15px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <a href="#" class="nav-item" data-section="settings">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
                     </path>
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                 </svg>
-                <span>Settings</span>
+                <span class="transition-opacity duration-300">Settings</span>
             </a>
         </nav>
     </div>
@@ -72,7 +78,7 @@
     <div id="sidebarOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden lg:hidden"></div>
 
     <!-- Main Content -->
-    <div id="mainContent" class="transition-all duration-300 ease-in-out ml-64">
+    <div id="mainContent" class="content-transition ml-64">
         <!-- Top Bar -->
         <div class="bg-white shadow-sm border-b border-gray-200 px-6 py-4">
             <div class="flex items-center justify-between">
@@ -84,126 +90,170 @@
                         </svg>
                     </button>
                     <div>
-                        <h1 class="text-xl font-semibold text-gray-900">Local API Tester</h1>
-                        <p class="text-sm text-gray-600">Test your localhost APIs with a clean, Postman-inspired
-                            interface</p>
+                        <h1 class="text-2xl font-semibold text-gray-900">LocalPostman</h1>
+                        <p class="text-sm text-gray-600">Test your localhost APIs with ease</p>
                     </div>
                 </div>
-                <button id="collapseSidebar" class="hidden lg:flex p-2 rounded-lg hover:bg-gray-100 transition-colors">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path>
-                    </svg>
-                </button>
             </div>
         </div>
 
         <!-- Content Sections -->
         <div class="p-6">
             <!-- API Tester Section -->
-            <div id="testerSection" class="content-section">
-                <div class="grid lg:grid-cols-2 gap-6">
-                    <!-- Request Panel -->
-                    <div class="bg-white rounded-lg shadow-sm border p-6">
-                        <h2 class="text-gray-900 font-medium mb-4">Request</h2>
+            <div id="testerSection" class="grid grid-cols-2 space-x-6">
+                <!-- Request Configuration -->
+                <div class="bg-white rounded-lg shadow-sm border p-6">
+                   
 
-                        <form id="apiForm" class="space-y-4">
-                            <!-- Method and URL -->
-                            <div>
-                                <label class="text-gray-700 text-sm font-medium mb-2 block">Method & URL</label>
-                                <div class="flex space-x-3">
-                                    <select id="method"
-                                        class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 w-24">
-                                        <option value="GET">GET</option>
-                                        <option value="POST">POST</option>
-                                        <option value="PUT">PUT</option>
-                                        <option value="DELETE">DELETE</option>
-                                    </select>
-                                    <input type="text" id="url"
-                                        class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                                        placeholder="http://localhost:3000/api/endpoint" required>
-                                </div>
+                    <form id="apiForm" class="space-y-6">
+
+                         <div class="flex justify-between items-center">
+
+                        <h2 class="text-lg font-semibold text-gray-900 mb-4">Request Configuration</h2>
+                        <button type="submit"
+                            class="w-[160px] flex items-center justify-center bg-gradient-to-r from-green-800 py-2 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 shadow-sm">
+                                 <svg class="w-5 h-5 text-white mr-[5px]" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                                </svg> 
+                            <span class="text-[14px]">Send Request</span>
+                        </button>
+                    </div>
+                    
+                        <!-- Method and URL -->
+                        <div>
+                            <label class="text-gray-700 text-sm font-medium mb-3 block">Method & URL</label>
+                            <div class="flex space-x-3">
+                                <select id="method"
+                                    class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 w-32 font-medium">
+                                    <option value="GET">GET</option>
+                                    <option value="POST">POST</option>
+                                    <option value="PUT">PUT</option>
+                                    <option value="DELETE">DELETE</option>
+                                </select>
+                                <input type="text" id="url"
+                                    class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                                    placeholder="http://localhost:3000/api/endpoint" required>
                             </div>
+                        </div>
 
-                            <!-- Authorization -->
-                            <div>
-                                <label class="text-gray-700 text-sm font-medium mb-2 block">Authorization</label>
-                                <textarea id="jwt"
-                                    class="w-full px-3 py-2 h-[150px] resize-none border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 code-block text-sm"
-                                    placeholder="Bearer token (optional)"></textarea>
-
-                                <div class="flex items-center mt-2">
-                                    <input type="checkbox" id="includeJwt"
-                                        class="w-4 h-4 text-green-600 rounded focus:ring-green-500" checked>
-                                    <label for="includeJwt" class="ml-2 text-sm text-gray-600 cursor-pointer">Include
-                                        authorization header</label>
-                                </div>
-                            </div>
-
-                            <!-- File Upload -->
-                            <div>
-                                <label class="text-gray-700 text-sm font-medium mb-2 block">File Upload</label>
-                                <input type="file" id="file"
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">
-                                <div class="flex items-center mt-2">
-                                    <input type="checkbox" id="includeFile"
+                        <!-- Authorization Section -->
+                        <div class="bg-white rounded-lg border border-gray-200 p-4">
+                            <div class="flex items-center justify-between mb-3">
+                                <label class="text-gray-700 text-sm font-medium">Authorization</label>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="enableAuth"
                                         class="w-4 h-4 text-green-600 rounded focus:ring-green-500">
-                                    <label for="includeFile" class="ml-2 text-sm text-gray-600 cursor-pointer">Attach
-                                        file to request</label>
+                                    <label for="enableAuth" class="ml-2 text-sm text-gray-600 cursor-pointer">Enable
+                                        Auth</label>
                                 </div>
                             </div>
+                            <div id="authSection" class="slide-down">
+                                <textarea id="jwt"
+                                    class="w-full px-4 py-3 h-32 resize-none border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 code-block text-sm"
+                                    placeholder="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."></textarea>
+                                <p class="text-xs text-gray-500 mt-2">Enter your Bearer token or API key</p>
+                            </div>
+                        </div>
 
-                            <!-- JSON Body -->
-                            <div>
-                                <label class="text-gray-700 text-sm font-medium mb-2 block">JSON Body</label>
-                                <textarea id="jsonBody"
-                                    class="w-full h-32 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 code-block text-sm resize-none"
-                                    placeholder='{\n  "name": "John Doe",\n  "email": "john@example.com"\n}'></textarea>
-                                <div class="flex items-center mt-2">
+                        <!-- File Upload Section -->
+                        <div class="bg-white rounded-lg border border-gray-200 p-4">
+                            <div class="flex items-center justify-between mb-3">
+                                <label class="text-gray-700 text-sm font-medium">File Upload</label>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="enableFile"
+                                        class="w-4 h-4 text-green-600 rounded focus:ring-green-500">
+                                    <label for="enableFile" class="ml-2 text-sm text-gray-600 cursor-pointer">Enable
+                                        File</label>
+                                </div>
+                            </div>
+                            <div id="fileSection" class="slide-down">
+                                <div class="file-input-wrapper">
+                                    <input type="file" id="file">
+                                    <div class="file-input-display">
+                                        <svg class="w-5 h-5 text-gray-400 mr-3" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13">
+                                            </path>
+                                        </svg>
+                                        <span id="fileText" class="text-gray-500">Choose a file to upload</span>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-2">Select a file to attach to your request</p>
+                            </div>
+                        </div>
+
+                        <!-- JSON Body Section -->
+                        <div class="bg-white rounded-lg border border-gray-200 p-4">
+                            <div class="flex items-center justify-between mb-3">
+                                <label class="text-gray-700 text-sm font-medium">JSON Body</label>
+                                <div class="flex items-center">
                                     <input type="checkbox" id="includeBody"
                                         class="w-4 h-4 text-green-600 rounded focus:ring-green-500" checked>
                                     <label for="includeBody" class="ml-2 text-sm text-gray-600 cursor-pointer">Include
-                                        JSON body (POST/PUT)</label>
+                                        Body</label>
                                 </div>
                             </div>
+                            <textarea id="jsonBody"
+                                class="w-full h-40 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 code-block text-sm resize-none"
+                                placeholder='{\n  "name": "John Doe",\n  "email": "john@example.com",\n  "message": "Hello World"\n}'></textarea>
+                            <p class="text-xs text-gray-500 mt-2">JSON payload for POST/PUT requests</p>
+                        </div>
 
-                            <button type="submit"
-                                class="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-4 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
-                                Send Request
-                            </button>
-                        </form>
+
+                    </form>
+                </div>
+
+                <!-- Response Section -->
+                <div class="bg-white rounded-lg shadow-sm border p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-lg font-semibold text-gray-900">Response</h2>
+                        <div id="statusBadge"
+                            class="px-3 py-1 text-xs font-semibold rounded-full hidden bg-green-100 text-green-800">
+                            200 OK
+                        </div>
                     </div>
 
-                    <!-- Response Panel -->
-                    <div class="bg-white rounded-lg shadow-sm border p-6">
-                        <div class="flex justify-between items-center mb-4">
-                            <h2 class="text-gray-900 font-medium">Response</h2>
-                            <div id="statusBadge" class="px-2 py-1 text-xs font-semibold rounded method-get hidden">
-                                200 OK
+                    <!-- Response Body -->
+                    <div class="mb-6">
+                        <label class="text-gray-700 text-sm font-medium mb-2 block">Response Body</label>
+                        <div id="responseBody"
+                            class="bg-gray-900 text-gray-100 p-4 rounded-lg h-64 overflow-auto code-block text-sm border">
+                            <div class="text-gray-400 flex items-center justify-center h-full">
+                                <div class="text-center">
+                                    <svg class="w-12 h-12 mx-auto mb-3 text-gray-600" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z">
+                                        </path>
+                                    </svg>
+                                    <p>Ready to send your first request...</p>
+                                </div>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Response Body -->
-                        <div class="mb-4">
-                            <div id="responseBody"
-                                class="bg-gray-900 text-gray-100 p-4 rounded-md h-64 overflow-auto code-block text-sm ">
-                                Ready to send request...
-                            </div>
+                    <!-- Token Section -->
+                    <div id="tokenSection" class="bg-green-50 border border-green-200 rounded-lg p-4 hidden">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-green-800 text-sm font-medium flex items-center">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 7a2 2 0 012 2m0 0a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V9a2 2 0 012-2m0 0V7a2 2 0 012-2m-6 6h4m-4 4h4">
+                                    </path>
+                                </svg>
+                                Access Token
+                            </span>
+                            <button id="copyTokenBtn"
+                                class="px-3 py-1 bg-green-600 hover:bg-green-700 text-white text-xs font-medium rounded transition-colors">
+                                Copy
+                            </button>
                         </div>
-
-                        <!-- Token Section -->
-                        <div id="tokenSection" class="bg-green-50 border border-green-200 rounded-md p-3 hidden">
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="text-green-700 text-sm font-medium">Access Token</span>
-                                <button id="copyTokenBtn"
-                                    class="px-2 py-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs rounded transition-colors">
-                                    Copy
-                                </button>
-                            </div>
-                            <input type="text" id="accessToken"
-                                class="w-full px-3 py-2 bg-white border border-gray-300 rounded text-xs code-block"
-                                readonly>
-                        </div>
+                        <textarea id="accessToken"
+                            class="w-full px-3 py-2 h-20 bg-white border border-green-300 rounded-lg text-xs code-block resize-none focus:outline-none focus:ring-2 focus:ring-green-500"
+                            readonly></textarea>
                     </div>
                 </div>
             </div>
@@ -212,34 +262,69 @@
             <div id="historySection" class="content-section hidden">
                 <div class="bg-white rounded-lg shadow-sm border p-6">
                     <h2 class="text-xl font-semibold mb-4">Request History</h2>
-                    <p class="text-gray-600">Your recent API requests will appear here.</p>
+                    <div class="text-center py-12">
+                        <svg class="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <p class="text-gray-600">Your recent API requests will appear here.</p>
+                    </div>
                 </div>
             </div>
 
             <div id="environmentsSection" class="content-section hidden">
                 <div class="bg-white rounded-lg shadow-sm border p-6">
                     <h2 class="text-xl font-semibold mb-4">Environments</h2>
-                    <p class="text-gray-600">Manage different API environments (Development, Staging, Production).</p>
+                    <div class="text-center py-12">
+                        <svg class="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9 3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9">
+                            </path>
+                        </svg>
+                        <p class="text-gray-600">Manage different API environments (Development, Staging, Production).
+                        </p>
+                    </div>
                 </div>
             </div>
 
             <div id="collectionsSection" class="content-section hidden">
                 <div class="bg-white rounded-lg shadow-sm border p-6">
                     <h2 class="text-xl font-semibold mb-4">Collections</h2>
-                    <p class="text-gray-600">Save and organize your API requests into collections.</p>
+                    <div class="text-center py-12">
+                        <svg class="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+                            </path>
+                        </svg>
+                        <p class="text-gray-600">Save and organize your API requests into collections.</p>
+                    </div>
                 </div>
             </div>
 
             <div id="settingsSection" class="content-section hidden">
                 <div class="bg-white rounded-lg shadow-sm border p-6">
                     <h2 class="text-xl font-semibold mb-4">Settings</h2>
-                    <p class="text-gray-600">Configure your API testing preferences.</p>
+                    <div class="text-center py-12">
+                        <svg class="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                            </path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        <p class="text-gray-600">Configure your API testing preferences.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <script src="script.js"></script>
+
 </body>
 
 </html>
