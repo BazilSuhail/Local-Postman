@@ -2,270 +2,414 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Localhost API Tester</title>
-    <style>
-        body {
-            font-family: "Segoe UI", sans-serif;
-            background-color: #f0fff4;
-            color: #2f855a;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 40px;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Localhost API Tester</title>
 
-        .container {
-            max-width: 700px;
-            width: 100%;
-            background: #ffffff;
-            border: 1px solid #c6f6d5;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(72, 187, 120, 0.2);
-        }
+  <!-- Google Fonts: Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #2f855a;
-        }
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-        label {
-            display: block;
-            margin-top: 15px;
-            font-weight: 600;
-        }
+  <style>
+    :root {
+      --primary: #2f855a;
+      --primary-dark: #22543d;
+      --primary-light: #48bb78;
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --text: #e2e8f0;
+      --text-light: #94a3b8;
+      --border: #334155;
+      --success: #65a30d;
+      --error: #e53e3e;
+      --hover: #38a169;
+    }
 
-        input[type="text"],
-        select,
-        input[type="file"],
-        textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #c6f6d5;
-            border-radius: 6px;
-            margin-top: 6px;
-            font-family: monospace;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 60px 20px;
+      transition: background 0.3s ease;
+    }
 
-        .checkbox-row {
-            display: flex;
-            align-items: center;
-            margin-top: 8px;
-            gap: 8px;
-        }
+    .container {
+      max-width: 800px;
+      width: 100%;
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      padding: 36px;
+      border-radius: 18px;
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
+      color: var(--text);
+    }
 
-        button {
-            margin-top: 20px;
-            width: 100%;
-            padding: 12px;
-            background-color: #38a169;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+    h2 {
+      text-align: center;
+      margin-bottom: 28px;
+      font-weight: 700;
+      font-size: 24px;
+      color: var(--primary-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
 
-        button:hover {
-            background-color: #2f855a;
-        }
+    h2 i {
+      color: var(--primary-light);
+    }
 
-        .message {
-            margin-top: 20px;
-            text-align: center;
-            font-weight: bold;
-        }
+    label {
+      display: block;
+      margin-top: 18px;
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text-light);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-        #responseBox {
-            margin-top: 20px;
-            border: 1px solid #c6f6d5;
-            border-radius: 6px;
-            padding: 15px;
-            background-color: #f0fff4;
-            white-space: pre-wrap;
-            font-family: monospace;
-            color: #22543d;
-        }
+    label i {
+      color: var(--primary-light);
+      font-size: 14px;
+    }
 
-        .token-container {
-            margin-top: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+    input[type="text"],
+    select,
+    input[type="file"],
+    textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-top: 8px;
+      background: #24324a;
+      color: var(--text);
+      font-family: 'Inter', monospace;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
 
-        .token-container input {
-            flex-grow: 1;
-            font-size: 14px;
-            padding: 8px;
-            border-radius: 6px;
-            border: 1px solid #c6f6d5;
-        }
+    input[type="text"]:focus,
+    select:focus,
+    textarea:focus,
+    input[type="file"]:focus {
+      outline: none;
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 3px rgba(72, 187, 120, 0.3);
+    }
 
-        .token-container button {
-            width: auto;
-            padding: 8px 12px;
-            margin-top: 0;
-        }
-    </style>
+    textarea {
+      resize: vertical;
+      min-height: 110px;
+      line-height: 1.5;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      margin-top: 8px;
+      gap: 10px;
+      font-size: 14px;
+    }
+
+    .checkbox-row input[type="checkbox"] {
+      accent-color: var(--primary-light);
+      transform: scale(1.1);
+    }
+
+    .checkbox-row label {
+      margin: 0;
+      font-weight: 500;
+      color: var(--text-light);
+      cursor: pointer;
+    }
+
+    button {
+      margin-top: 24px;
+      width: 100%;
+      padding: 14px;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 4px 12px rgba(56, 161, 105, 0.3);
+    }
+
+    button:hover {
+      background-color: var(--hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(56, 161, 105, 0.4);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .message {
+      margin-top: 20px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    #responseBox {
+      margin-top: 24px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px;
+      background-color: #1a2332;
+      white-space: pre-wrap;
+      font-family: 'Inter', monospace;
+      font-size: 14px;
+      color: #a8d8a0;
+      line-height: 1.6;
+      min-height: 80px;
+      max-height: 400px;
+      overflow-y: auto;
+      transition: border-color 0.3s;
+    }
+
+    .token-container {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .token-container input {
+      flex-grow: 1;
+      font-size: 14px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #24324a;
+      color: var(--text);
+      font-family: monospace;
+    }
+
+    .token-container button {
+      width: auto;
+      padding: 10px 16px;
+      margin-top: 0;
+      background-color: #4a5568;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .token-container button:hover {
+      background-color: #2d3748;
+    }
+
+    .icon-success {
+      color: var(--success);
+    }
+
+    .icon-error {
+      color: var(--error);
+    }
+
+    /* Loading indicator */
+    .loading {
+      opacity: 0.7;
+      pointer-events: none;
+      position: relative;
+    }
+
+    .loading::after {
+      content: " ⏳";
+    }
+  </style>
 </head>
 
 <body>
-    <div class="container">
-        <h2>Localhost API Tester</h2>
-        <form id="apiForm">
-            <label for="url">Request URL</label>
-            <input type="text" id="url" name="url" placeholder="http://localhost:3000/api" />
+  <div class="container">
+    <h2><i class="fas fa-plug"></i> Localhost API Tester</h2>
+    <form id="apiForm">
+      <label for="url"><i class="fas fa-link"></i> Request URL</label>
+      <input type="text" id="url" name="url" placeholder="http://localhost:3000/api" required />
 
-            <label for="method">HTTP Method</label>
-            <select id="method" name="method">
-                <option value="GET">GET</option>
-                <option value="POST">POST</option>
-                <option value="PUT">PUT</option>
-                <option value="DELETE">DELETE</option>
-            </select>
+      <label for="method"><i class="fas fa-code"></i> HTTP Method</label>
+      <select id="method" name="method">
+        <option value="GET">GET</option>
+        <option value="POST">POST</option>
+        <option value="PUT">PUT</option>
+        <option value="DELETE">DELETE</option>
+      </select>
 
-            <label for="jwt">JWT Token</label>
-            <input type="text" id="jwt" name="jwt" placeholder="Bearer token" />
-            <div class="checkbox-row">
-                <input type="checkbox" id="includeJwt" checked />
-                <label for="includeJwt">Include JWT Token</label>
-            </div>
+      <label for="jwt"><i class="fas fa-key"></i> JWT Token</label>
+      <input type="text" id="jwt" name="jwt" placeholder="Enter your Bearer token..." />
+      <div class="checkbox-row">
+        <input type="checkbox" id="includeJwt" checked />
+        <label for="includeJwt">Include Authorization Header</label>
+      </div>
 
-            <label for="file">File Upload</label>
-            <input type="file" id="file" name="file" />
-            <div class="checkbox-row">
-                <input type="checkbox" id="includeFile" checked />
-                <label for="includeFile">Include File</label>
-            </div>
+      <label for="file"><i class="fas fa-file-upload"></i> File Upload</label>
+      <input type="file" id="file" name="file" />
+      <div class="checkbox-row">
+        <input type="checkbox" id="includeFile" />
+        <label for="includeFile">Attach File in Request</label>
+      </div>
 
-            <label for="jsonBody">JSON Body (for POST/PUT)</label>
-            <textarea id="jsonBody" placeholder='{"key": "value"}'></textarea>
+      <label for="jsonBody"><i class="fas fa-brackets-curly"></i> JSON Body (for POST/PUT)</label>
+      <textarea id="jsonBody" placeholder='{&#10;  "name": "John",&#10;  "email": "john@example.com"&#10}'></textarea>
 
-            <button type="submit">Submit Request</button>
-        </form>
+      <button type="submit">
+        <i class="fas fa-paper-plane"></i> <span>Send Request</span>
+      </button>
+    </form>
 
-        <div id="responseBox">Waiting for response...</div>
+    <div id="responseBox">🟢 Ready. Submit a request to see response.</div>
 
-        <div id="tokenContainer" class="token-container" style="display: none;">
-            <input type="text" id="accessToken" readonly />
-            <button type="button" onclick="copyToken()">Copy Token</button>
-        </div>
+    <div id="tokenContainer" class="token-container" style="display: none;">
+      <input type="text" id="accessToken" readonly placeholder="Access token will appear here" />
+      <button type="button" onclick="copyToken()">
+        <i class="fas fa-copy"></i> Copy
+      </button>
     </div>
+  </div>
 
-    <script>
-        function copyToken() {
-            const tokenInput = document.getElementById("accessToken");
-            tokenInput.select();
-            tokenInput.setSelectionRange(0, 99999);
-            navigator.clipboard.writeText(tokenInput.value)
-                .then(() => alert("Token copied to clipboard!"))
-                .catch(() => alert("Failed to copy token"));
+  <script>
+    function copyToken() {
+      const tokenInput = document.getElementById("accessToken");
+      tokenInput.select();
+      tokenInput.setSelectionRange(0, 99999);
+      navigator.clipboard.writeText(tokenInput.value)
+        .then(() => {
+          const btn = tokenInput.nextElementSibling;
+          const originalText = btn.innerHTML;
+          btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+          btn.style.backgroundColor = '#65a30d';
+          setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.style.backgroundColor = '';
+          }, 2000);
+        })
+        .catch(() => {
+          alert("Failed to copy token. Try manually selecting it.");
+        });
+    }
+
+    document.getElementById("apiForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const url = document.getElementById("url").value.trim();
+      const method = document.getElementById("method").value;
+      const jwt = document.getElementById("jwt").value.trim();
+      const includeJwt = document.getElementById("includeJwt").checked;
+      const fileInput = document.getElementById("file");
+      const includeFile = document.getElementById("includeFile").checked;
+      const jsonBody = document.getElementById("jsonBody").value.trim();
+      const responseBox = document.getElementById("responseBox");
+      const tokenContainer = document.getElementById("tokenContainer");
+      const accessTokenField = document.getElementById("accessToken");
+
+      // Reset
+      tokenContainer.style.display = "none";
+      responseBox.textContent = "🔄 Sending request...";
+      responseBox.style.color = "#94a3b8";
+
+      // Validate localhost
+      if (!url.startsWith("http://localhost") && !url.startsWith("https://localhost")) {
+        responseBox.textContent = "⛔ Only localhost requests are allowed!";
+        responseBox.style.color = var(--error);
+        return;
+      }
+
+      const headers = {};
+      if (includeJwt && jwt) {
+        headers["Authorization"] = jwt.startsWith("Bearer ") ? jwt : `Bearer ${jwt}`;
+      }
+
+      let body = null;
+      let useForm = includeFile && fileInput.files.length > 0;
+
+      if (["POST", "PUT"].includes(method)) {
+        if (useForm) {
+          body = new FormData();
+          body.append("file", fileInput.files[0]);
+          if (jsonBody) {
+            try {
+              const json = JSON.parse(jsonBody);
+              for (const key in json) {
+                body.append(key, json[key]);
+              }
+            } catch (err) {
+              responseBox.textContent = "❌ Invalid JSON format in body.";
+              responseBox.style.color = var(--error);
+              return;
+            }
+          }
+          // FormData sets content-type automatically
+        } else if (jsonBody) {
+          try {
+            body = JSON.stringify(JSON.parse(jsonBody));
+            headers["Content-Type"] = "application/json";
+          } catch (err) {
+            responseBox.textContent = "❌ Invalid JSON format.";
+            responseBox.style.color = var(--error);
+            return;
+          }
+        }
+      }
+
+      try {
+        const res = await fetch(url, {
+          method,
+          headers,
+          body: ["GET", "DELETE"].includes(method) ? undefined : body,
+        });
+
+        const contentType = res.headers.get("content-type");
+        let resultText = "";
+        let json = null;
+
+        if (contentType && contentType.includes("application/json")) {
+          json = await res.json();
+          resultText = JSON.stringify(json, null, 2);
+        } else {
+          resultText = await res.text();
         }
 
-        document.getElementById("apiForm").addEventListener("submit", async function (e) {
-            e.preventDefault();
+        responseBox.textContent = `📡 ${res.status} ${res.statusText}\n\n${resultText}`;
+        responseBox.style.color = res.ok ? "#a8d8a0" : "#f87171";
 
-            const url = document.getElementById("url").value.trim();
-            const method = document.getElementById("method").value;
-            const jwt = document.getElementById("jwt").value.trim();
-            const includeJwt = document.getElementById("includeJwt").checked;
-            const fileInput = document.getElementById("file");
-            const includeFile = document.getElementById("includeFile").checked;
-            const jsonBody = document.getElementById("jsonBody").value.trim();
-            const responseBox = document.getElementById("responseBox");
-            const tokenContainer = document.getElementById("tokenContainer");
-            const accessTokenField = document.getElementById("accessToken");
+        if (json && json.access_token) {
+          accessTokenField.value = json.access_token;
+          tokenContainer.style.display = "flex";
+        }
 
-            tokenContainer.style.display = "none";
-            responseBox.textContent = "Waiting for response...";
-
-            if (!url.startsWith("http://localhost")) {
-                responseBox.textContent = "Only localhost requests are allowed!";
-                responseBox.style.color = "red";
-                return;
-            }
-
-            const headers = {};
-            if (includeJwt && jwt) {
-                headers["Authorization"] = jwt.startsWith("Bearer ") ? jwt : `Bearer ${jwt}`;
-            }
-
-            let body = null;
-            let useForm = includeFile && fileInput.files.length > 0;
-            const hasJsonBody = jsonBody !== "";
-
-            if (["POST", "PUT"].includes(method)) {
-                if (useForm) {
-                    body = new FormData();
-                    body.append("file", fileInput.files[0]);
-
-                    if (hasJsonBody) {
-                        try {
-                            const json = JSON.parse(jsonBody);
-                            for (const key in json) {
-                                body.append(key, json[key]);
-                            }
-                        } catch (err) {
-                            responseBox.textContent = "Invalid JSON format.";
-                            responseBox.style.color = "red";
-                            return;
-                        }
-                    }
-                } else if (hasJsonBody) {
-                    try {
-                        body = JSON.stringify(JSON.parse(jsonBody));
-                        if (!useForm && hasJsonBody) {
-                            headers["Content-Type"] = "application/json";
-                        }
-                    } catch (err) {
-                        responseBox.textContent = "Invalid JSON format.";
-                        responseBox.style.color = "red";
-                        return;
-                    }
-                }
-            }
-
-            try {
-                const res = await fetch(url, {
-                    method,
-                    headers,
-                    body: ["POST", "PUT"].includes(method) ? body : null,
-                });
-
-                const contentType = res.headers.get("content-type");
-                let resultText = "";
-                let json = null;
-
-                if (contentType && contentType.includes("application/json")) {
-                    json = await res.json();
-                    resultText = JSON.stringify(json, null, 2);
-                } else {
-                    resultText = await res.text();
-                }
-
-                responseBox.textContent = `Status: ${res.status} ${res.statusText}\n\n${resultText}`;
-                responseBox.style.color = res.ok ? "#22543d" : "red";
-
-                if (json && json.access_token) {
-                    accessTokenField.value = json.access_token;
-                    tokenContainer.style.display = "flex";
-                }
-            } catch (err) {
-                responseBox.textContent = `Error: ${err.message}`;
-                responseBox.style.color = "red";
-            }
-        });
-    </script>
+      } catch (err) {
+        responseBox.textContent = `⚠️ Network Error: ${err.message}`;
+        responseBox.style.color = var(--error);
+      }
+    });
+  </script>
 </body>
 
 </html>
