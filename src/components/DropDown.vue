@@ -3,7 +3,7 @@
     <!-- Trigger Button -->
     <button
       @click="isOpen = !isOpen"
-      :class="`px-4 py-[6px] rounded-lg border-2 font-semibold text-white transition-colors min-w-28 ${getMethodColor(method)} flex items-center justify-between gap-2`"
+      :class="`px-4 py-[6px] rounded-lg border-2 text-[15px] font-semibold text-white transition-colors min-w-28 ${getMethodColor(method)} flex items-center justify-between gap-2`"
     >
       <span>{{ method }}</span>
       <ChevronDownIcon 

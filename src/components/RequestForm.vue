@@ -1,29 +1,32 @@
 <template>
   <div class="sticky top-[15px] bg-white rounded-xl shadow-sm border border-gray-100 p-6">
     <!-- Header -->
-    <div class="flex items-center gap-3 mb-6">
-      <div class="p-2 bg-emerald-100 rounded-lg">
-        <ArrowsRightLeftIcon class="w-5 h-5 text-emerald-600" />
+  <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center gap-3 ">
+      <div class="p-[4px] bg-emerald-600 rounded-md">
+        <ArrowsRightLeftIcon  class="w-5 h-4 text-white" />
       </div>
-      <h2 class="text-xl font-bold bg-gradient-to-r from-emerald-600 to-emerald-800 bg-clip-text text-transparent">
+      <h2 class="text-md font-[600] bg-gradient-to-r from-emerald-600 to-emerald-800 bg-clip-text text-transparent">
         Request Configuration
       </h2>
     </div>
+      <button @click="sendRequest" :disabled="status === 'loading'"
+          class="flex items-center justify-center gap-2 py-[6px] bg-emerald-600 hover:bg-emerald-700 disabled:bg-gray-400 text-white rounded-lg font-medium transition-colors min-w-[100px]">
+          <div v-if="status === 'loading'"
+            class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+          <PaperAirplaneIcon v-else class="w-[15px] h-[15px] text-white" />
+          <span class="text-white text-[16px] mr-2">Send</span>
+        </button>
 
+  </div>
     <!-- Method + URL -->
     <div class="flex gap-3 mb-6">
       <CustomDropdown v-model="method" :methods="['GET', 'POST', 'PUT', 'PATCH', 'DELETE']" />
-      <div class="flex-1 flex flex-col sm:flex-row gap-x-3">
+      <div class="flex-1 flex gap-x-3">
         <input v-model="url"
-          class="flex-1 px-4 border border-gray-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+          class="flex-1 px-4 bg-gray-50 py-[8px] border border-gray-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
           placeholder="http://localhost:3000/api" />
-        <button @click="sendRequest" :disabled="status === 'loading'"
-          class="flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 disabled:bg-gray-400 text-white rounded-lg font-medium transition-colors min-w-[100px]">
-          <div v-if="status === 'loading'"
-            class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-          <PaperAirplaneIcon v-else class="w-4 h-4" />
-          Send
-        </button>
+      
       </div>
     </div>
 
@@ -59,90 +62,126 @@
       </div>
     </div>
 
-    <!-- Auth -->
-    <div class="mb-6">
-      <div class="flex items-center gap-3 mb-4 py-2">
-        <LockClosedIcon class="w-5 h-5 text-emerald-600" />
-        <label class="flex items-center gap-2 cursor-pointer">
-          <input type="checkbox" v-model="enableAuth"
-            class="w-4 h-4 text-emerald-600 border-gray-300 rounded focus:ring-emerald-500" />
-          <span class="font-semibold text-gray-900">Bearer Token Authentication</span>
-        </label>
-      </div>
+   <!-- Auth -->
+<div class="mb-6">
+  <div class="flex items-center gap-3 mb-4 py-2">
+    <button 
+      @click="enableAuth = !enableAuth"
+      :class="`p-2 rounded-lg transition-colors ${enableAuth ? 'bg-emerald-100 text-emerald-600' : 'bg-gray-100 text-gray-400 hover:text-gray-600'}`"
+    >
+      <LockClosedIcon class="w-5 h-5" />
+    </button>
+    <span 
+      @click="enableAuth = !enableAuth"
+      class="font-semibold text-gray-900 cursor-pointer"
+    >
+      Bearer Token Authentication
+    </span>
+  </div>
 
-      <div v-if="enableAuth" class="space-y-3 pl-1">
-        <div class="relative">
-          <input :type="showToken ? 'text' : 'password'" v-model="token" placeholder="Enter your bearer token"
-            class="w-full px-4 py-2.5 pr-20 border border-gray-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent font-mono text-sm transition-all" />
-          <div class="absolute right-2 top-1/2 transform -translate-y-1/2 flex gap-1">
-            <button @click="showToken = !showToken" class="p-1 text-gray-400 hover:text-gray-600 transition-colors"
-              :title="showToken ? 'Hide token' : 'Show token'">
-              <EyeSlashIcon v-if="showToken" class="w-4 h-4" />
-              <EyeIcon v-else class="w-4 h-4" />
-            </button>
-            <button v-if="token" @click="copyToClipboard(token, 'token')"
-              class="p-1 text-gray-400 hover:text-gray-600 transition-colors" title="Copy token">
-              <CheckIcon v-if="copied === 'token'" class="w-4 h-4 text-green-500" />
-              <ClipboardIcon v-else class="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-        <div v-if="token && !showToken" class="text-sm text-gray-500 font-mono pl-1">
-          Preview: {{ maskToken(token) }}
-        </div>
-      </div>
-    </div>
-
-    <!-- File -->
-    <div class="mb-6">
-      <div class="flex items-center gap-3 mb-4 py-2">
-        <ArrowUpTrayIcon class="w-5 h-5 text-emerald-600" />
-        <label class="flex items-center gap-2 cursor-pointer">
-          <input type="checkbox" v-model="enableFile"
-            class="w-4 h-4 text-emerald-600 border-gray-300 rounded focus:ring-emerald-500" />
-          <span class="font-semibold text-gray-900">File Upload</span>
-        </label>
-      </div>
-
-      <div v-if="enableFile" class="space-y-3 pl-1">
-        <div @click="$refs.fileInput.click()"
-          class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-emerald-400 cursor-pointer transition-colors">
-          <div v-if="file" class="flex flex-col sm:flex-row items-center justify-center gap-2">
-            <DocumentIcon class="w-5 h-5 text-emerald-600" />
-            <span class="font-medium text-center sm:text-left">{{ file.name }}</span>
-            <span class="text-sm text-gray-500">({{ (file.size / 1024).toFixed(1) }} KB)</span>
-          </div>
-          <div v-else class="py-4">
-            <ArrowUpTrayIcon class="w-8 h-8 text-gray-400 mx-auto mb-2" />
-            <p class="text-gray-600">Click to select a file</p>
-          </div>
-        </div>
-        <input ref="fileInput" type="file" class="hidden" @change="onFileChange" />
-      </div>
-    </div>
-
-    <!-- Body -->
-    <div class="mb-6">
-      <div class="flex items-center gap-3 mb-4 py-2">
-        <CodeBracketIcon class="w-5 h-5 text-emerald-600" />
-        <label class="flex items-center gap-2 cursor-pointer">
-          <input type="checkbox" v-model="includeBody"
-            class="w-4 h-4 text-emerald-600 border-gray-300 rounded focus:ring-emerald-500" />
-          <span class="font-semibold text-gray-900">Request Body (JSON)</span>
-        </label>
-      </div>
-
-      <div v-if="includeBody" class="relative pl-1">
-        <textarea v-model="body"
-          class="w-full h-32 px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent font-mono text-sm resize-none transition-all"
-          placeholder='{"name": "John", "email": "john@example.com"}'></textarea>
-        <button @click="copyToClipboard(body, 'body')"
-          class="absolute top-2 right-2 p-1 text-gray-400 hover:text-gray-600 transition-colors" title="Copy body">
-          <CheckIcon v-if="copied === 'body'" class="w-4 h-4 text-green-500" />
+  <div v-if="enableAuth" class="space-y-3 pl-1">
+    <div class="relative">
+      <input 
+        :type="showToken ? 'text' : 'password'" 
+        v-model="token" 
+        placeholder="Enter your bearer token"
+        class="w-full px-4 py-2.5 pr-20 border border-gray-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent font-mono text-sm transition-all" 
+      />
+      <div class="absolute right-2 top-1/2 transform -translate-y-1/2 flex gap-1">
+        <button 
+          @click="showToken = !showToken" 
+          class="p-1 text-gray-400 hover:text-gray-600 transition-colors"
+          :title="showToken ? 'Hide token' : 'Show token'"
+        >
+          <EyeSlashIcon v-if="showToken" class="w-4 h-4" />
+          <EyeIcon v-else class="w-4 h-4" />
+        </button>
+        <button 
+          v-if="token" 
+          @click="copyToClipboard(token, 'token')"
+          class="p-1 text-gray-400 hover:text-gray-600 transition-colors" 
+          title="Copy token"
+        >
+          <CheckIcon v-if="copied === 'token'" class="w-4 h-4 text-green-500" />
           <ClipboardIcon v-else class="w-4 h-4" />
         </button>
       </div>
     </div>
+    <div v-if="token && !showToken" class="text-sm text-gray-500 font-mono pl-1">
+      Preview: {{ maskToken(token) }}
+    </div>
+  </div>
+</div>
+
+<!-- File -->
+<div class="mb-6">
+  <div class="flex items-center gap-3 mb-4 py-2">
+    <button 
+      @click="enableFile = !enableFile"
+      :class="`p-2 rounded-lg transition-colors ${enableFile ? 'bg-emerald-100 text-emerald-600' : 'bg-gray-100 text-gray-400 hover:text-gray-600'}`"
+    >
+      <ArrowUpTrayIcon class="w-5 h-5" />
+    </button>
+    <span 
+      @click="enableFile = !enableFile"
+      class="font-semibold text-gray-900 cursor-pointer"
+    >
+      File Upload
+    </span>
+  </div>
+
+  <div v-if="enableFile" class="space-y-3 pl-1">
+    <div 
+      @click="$refs.fileInput.click()"
+      class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-emerald-400 cursor-pointer transition-colors"
+    >
+      <div v-if="file" class="flex flex-col sm:flex-row items-center justify-center gap-2">
+        <DocumentIcon class="w-5 h-5 text-emerald-600" />
+        <span class="font-medium text-center sm:text-left">{{ file.name }}</span>
+        <span class="text-sm text-gray-500">({{ (file.size / 1024).toFixed(1) }} KB)</span>
+      </div>
+      <div v-else class="py-4">
+        <ArrowUpTrayIcon class="w-8 h-8 text-gray-400 mx-auto mb-2" />
+        <p class="text-gray-600">Click to select a file</p>
+      </div>
+    </div>
+    <input ref="fileInput" type="file" class="hidden" @change="onFileChange" />
+  </div>
+</div>
+
+<!-- Body -->
+<div class="mb-6">
+  <div class="flex items-center gap-3 mb-4 py-2">
+    <button 
+      @click="includeBody = !includeBody"
+      :class="`p-2 rounded-lg transition-colors ${includeBody ? 'bg-emerald-100 text-emerald-600' : 'bg-gray-100 text-gray-400 hover:text-gray-600'}`"
+    >
+      <CodeBracketIcon class="w-5 h-5" />
+    </button>
+    <span 
+      @click="includeBody = !includeBody"
+      class="font-semibold text-gray-900 cursor-pointer"
+    >
+      Request Body (JSON)
+    </span>
+  </div>
+
+  <div v-if="includeBody" class="relative pl-1">
+    <textarea 
+      v-model="body"
+      class="w-full h-32 px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent font-mono text-sm resize-none transition-all"
+      placeholder='{"name": "John", "email": "john@example.com"}'
+    ></textarea>
+    <button 
+      @click="copyToClipboard(body, 'body')"
+      class="absolute top-2 right-2 p-1 text-gray-400 hover:text-gray-600 transition-colors" 
+      title="Copy body"
+    >
+      <CheckIcon v-if="copied === 'body'" class="w-4 h-4 text-green-500" />
+      <ClipboardIcon v-else class="w-4 h-4" />
+    </button>
+  </div>
+</div>
   </div>
 </template>
 
@@ -172,7 +211,7 @@ const { method, url, headers, body, includeBody, enableAuth, token, enableFile, 
 const showToken = ref(false);
 const copied = ref('');
 const expandedSections = ref({
-  headers: true
+  headers: false
 });
 
 function onFileChange(e) {
@@ -187,16 +226,6 @@ function toggleSection(section) {
   expandedSections.value[section] = !expandedSections.value[section];
 }
 
-function getMethodColor(method) {
-  const colors = {
-    'GET': 'bg-blue-500 hover:bg-blue-600 border-blue-500',
-    'POST': 'bg-emerald-500 hover:bg-emerald-600 border-emerald-500',
-    'PUT': 'bg-amber-500 hover:bg-amber-600 border-amber-500',
-    'DELETE': 'bg-red-500 hover:bg-red-600 border-red-500',
-    'PATCH': 'bg-purple-500 hover:bg-purple-600 border-purple-500'
-  };
-  return colors[method] || 'bg-gray-500 hover:bg-gray-600 border-gray-500';
-}
 
 function maskToken(token) {
   if (!token) return '';
