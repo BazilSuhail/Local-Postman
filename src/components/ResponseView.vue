@@ -123,14 +123,13 @@
         </div>
 
         <div class="relative">
-      <pre class="bg-gray-900 text-emerald-300 p-4 rounded-lg text-sm font-mono border"
-     :style="{
-       maxHeight: isExpanded ? 'none' : '400px',
-       overflowX: 'hidden',
-       overflowY: isExpanded ? 'visible' : 'auto',
-       whiteSpace: 'pre-wrap',
-       wordWrap: 'break-word'
-     }">
+          <pre class="bg-gray-900 text-emerald-300 p-4 rounded-lg text-sm font-mono border" :style="{
+            maxHeight: isExpanded ? 'none' : '400px',
+            overflowX: 'hidden',
+            overflowY: isExpanded ? 'visible' : 'auto',
+            whiteSpace: 'pre-wrap',
+            wordWrap: 'break-word'
+          }">
   {{ pretty(response.body) }}
 </pre>
 
