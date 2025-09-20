@@ -8,8 +8,10 @@
           'flex-1 p-6 transition-all duration-300',
         ]"
       >
+      <div class="flex items-center  bg-amber-100">
         <RequestForm />
         <ResponseView />
+      </div>
         <HistoryView />
       </main>
     </div>

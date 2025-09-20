@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white p-4 rounded-lg shadow mt-6">
+  <div class="bg-white flex-1 h-full p-4 rounded-lg shadow mt-6">
     <h2 class="font-semibold text-lg mb-4">Response</h2>
     <div v-if="status==='loading'" class="text-yellow-600">Sending request...</div>
     <div v-else-if="response">
