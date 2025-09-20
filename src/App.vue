@@ -1,6 +1,6 @@
 <template> 
      <!-- Show app only on >=1080px -->
-    <div v-if="isLargeScreen" class="flex min-h-screen bg-gray-50">    
+    <div v-if="isLargeScreen" class="flex min-h-screen bg-gray-100">    
       <Sidebar />
       <main
         :class="[
